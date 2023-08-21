@@ -36,7 +36,7 @@ public class ClassTest5 {
 		
 	}
 	
-}
+}//ClassTest5
 
 
 
@@ -70,7 +70,9 @@ class Account {
 			balance -= money;
 		}
 	}
-}
+	
+}//Account
+
 
 
 
@@ -153,12 +155,8 @@ class Bank {
 		System.out.println(money + "원 출금완료!");
 	}
 	
-	//패키지 오류
-	//노트북에서 수정후 커밋앤 푸시
-	
-	//로컬 newbranch1에서 커밋
-	//깃허브 계정 변경 후 커밋
+
 	
 	
-}
+}//Bank
 

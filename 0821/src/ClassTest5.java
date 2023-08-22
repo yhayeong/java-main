@@ -1,21 +1,8 @@
-import java.util.Arrays;
 
 public class ClassTest5 {
 
 	public static void main(String[] args) {
-//		Account acc1 = new Account();
-//		acc1.id = "10001";
-//		acc1.name = "고길동";
-//		acc1.balance = 100000;
-//		
-//		System.out.println(acc1.info());
-//		
-//		acc1.deposit(10000); //예금하기
-//		System.out.println(acc1.info());
-//		
-//		acc1.withdraw(20000); //인출하기
-//		System.out.println(acc1.info());
-		
+
 		Bank bank = new Bank();
 		bank.makeAccount("10001", "고길둉", 100000);
 		bank.makeAccount("10002", "김길둉", 200000);
@@ -45,6 +32,13 @@ class Account {
 	String id;
 	String name;
 	int balance;
+	
+	Account() {}
+	Account(String id, String name, int money) {
+		this.id = id;
+		this.name = name;
+		this.balance = money;
+	}
 	
 	String info() {
 		return String.format("계좌번호:%s, 이름:%s, 잔액:%d", id, name, balance);
@@ -79,21 +73,14 @@ class Account {
 class Bank {
 	
 	Account[] accs = new Account[100];
-	int accCnt; //개설계좌개수
+	int accCnt; //개설된계좌개수
+	
 	
 	void makeAccount(String id, String name, int money) {
+		Account acc = new Account(id, name, money);
 		
-		//전달인자로 계좌 생성
-		Account acc = new Account();
-		acc.id = id;
-		acc.name = name;
-		acc.balance = money;
-		
-		//생성된객체의 주소를 배열에 넣는다 
-		accs[accCnt] = acc; //cf. 배열의길이는 인덱스 역할도 한다
-		//개설계좌수 증가
-		accCnt++;
-		
+		accs[accCnt] = acc; //생성된객체의 주소를 배열에 넣는다 cf. 배열의길이는 인덱스 역할도 한다
+		accCnt++; //개설계좌수 증가
 //		accs[accCnt++] = acc; //0번째에 넣고서 accCnt는 1이 되는것
 		
 		System.out.println("<신규 개설계좌 정보>" + acc.info());
@@ -109,11 +96,11 @@ class Bank {
 	}
 	
 	
-	//특정 계좌 조회
+	//특정 계좌 조회-직접풀이
 	void accountInfo(String id) {
 		
 		//해당계좌번호가 있는 경우 정보 출력
-		for (int i = 0; i < accCnt; i++) {
+		for (int i = 0; i < accCnt; i++) { //주의:accs.length로 하면 안된다(배열의 나머지칸들은 null로 채워져있음)
 			if(accs[i].id.equals(id)) {
 				System.out.println(accs[i].info()); 
 				return;
@@ -123,6 +110,60 @@ class Bank {
 			}
 		}
 	}
+	
+	//특정 계좌 조회-선생님코드(1)
+//	void accountInfo2(String id) {
+//		Account acc = null;
+//		for (int i = 0; i < accCnt; i++) {
+//			if(accs[i].id.equals(id)) {
+//				acc = accs[i]; //찾으면 acc에 그 계좌를 담는다
+//				break;
+//			}
+//		}
+//		if(acc==null) { //못찾음==여전히 null 이라면
+//			System.out.println("계좌번호가 틀립니다.");
+//			return;
+//		}
+//		System.out.println(acc.info()); //찾았다면 if에 안걸리고 이후 문장인 이 명령어가 수행됨
+//	}
+	
+	
+	//선생님(2)-계좌를 검색하는 공통코드를 메소드로 분리하여 사용---------------
+	Account searchAccById(String id) {
+		for (int i = 0; i < accCnt; i++) {
+			if(accs[i].id.equals(id)) {
+				return accs[i]; //찾았다면 그걸 가지고 호출부로 간다(바로메소드종료)
+			}
+		}
+		return null;
+	}
+	
+	void accountInfo3(String id) {
+		Account acc = searchAccById(id);
+		if(acc == null ) {
+			System.out.println("계좌번호가 틀립니다.");
+			return;
+		}
+		System.out.println(acc.info());
+	}
+	
+	void deposit2(String id, int money) {
+		Account acc = searchAccById(id);
+		if(acc == null ) {
+			System.out.println("계좌번호가 틀립니다.");
+			return;
+		}
+		acc.deposit(money);
+	}
+	void withdraw2(String id, int money) {
+		Account acc = searchAccById(id);
+		if(acc == null ) {
+			System.out.println("계좌번호가 틀립니다.");
+			return;
+		}
+		acc.withdraw(money);
+	}
+	//---------------------------------------------------------------
 	
 
 	void deposit(String id, int money) {
@@ -154,6 +195,10 @@ class Bank {
 		
 		System.out.println(money + "원 출금완료!");
 	}
+	
+	
+	
+	
 	
 
 	

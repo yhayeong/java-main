@@ -24,6 +24,11 @@ class Person2 {
 		// name = "none";
 		// age = a;
 	}
+	
+	Person2(Person2 p) {
+		name = p.name;
+		age = p.age;
+	}
 }
 
 
@@ -35,9 +40,15 @@ public class ConstructorTest1 {
 		per1.age = 30;
 		
 		Person2 per2 = new Person2("홍길동", 20);
-		
 		Person2 per3 = new Person2("구길동");
+		Person2 per4 = new Person2(40);
+		Person2 per5 = new Person2(per1);
 		
+		System.out.println(per1.name + ", " + per1.age);
+		System.out.println(per2.name + ", " + per2.age);
+		System.out.println(per3.name + ", " + per3.age);
+		System.out.println(per4.name + ", " + per4.age);
+		System.out.println(per5.name + ", " + per5.age);
 	}
 
 }

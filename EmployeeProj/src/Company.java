@@ -50,14 +50,12 @@ public class Company {
 	
 	int getTotalPay() {
 		int total = 0;
-		if(empCnt==0) {
-			return total;
-		} else {
-			for (int i = 0; i < empCnt; i++) {
-				total += empList[i].salary;
-			}
-			return total;
+		
+		for (int i = 0; i < empCnt; i++) {
+			total += empList[i].salary;
 		}
+		return total;
+
 	}
 	
 	

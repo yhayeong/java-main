@@ -7,7 +7,7 @@ class Person {
 		this.age = age;
 	}
 	String info() {
-		return "이름:" + age + ", 나이:" + age;
+		return "이름:" + name + ", 나이:" + age;
 	}
 	
 	
@@ -18,22 +18,22 @@ class Student extends Person {
 	
 	String major;
 	int grade;
+	
 	@Override
 	String info() {
-		return super.info();
+		return super.info() + ", 전공:" + major + ", 학년:" + grade; 
+		//부모의 것과 나의 것의 이름이 겹치는 경우에 super를 통해서 구별하므로 겹치는이름이 없다면 super빼도 됨
+		
 	}
-	
-//	Student(String name, int age) {
-//		this.name = name; //부모것도 내거니까 this.name은 Person 상속으로 인해 가지고있는 필드 name이다
-//		this.age = age;
-//		
-//	}
-	
-	
-	
-	
-	
+		
+	Student() {}
+	Student(String name, int age, String major, int grade) {
+		super(name, age);
+		this.major = major;
+		this.grade = grade;
+	}
 }
+
 
 
 public class InheritTest1 {
@@ -44,6 +44,9 @@ public class InheritTest1 {
 		stud1.major = "산업공학";
 		stud1.grade = 2;
 		System.out.println(stud1.info());
+		
+		Student stud2 = new Student("돈많은", 40, "금융", 3);
+		System.out.println(stud2.info());
 		
 		Person per1 = new Person();
 		per1.name = "내로남불";

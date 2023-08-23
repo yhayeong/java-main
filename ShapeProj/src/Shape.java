@@ -19,6 +19,6 @@ public abstract class Shape {
 	}
 	
 	//추상메소드
-	public abstract void allShapeDraw();
+	public abstract void draw();
 	
 }

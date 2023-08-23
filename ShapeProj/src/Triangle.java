@@ -19,12 +19,6 @@ public class Triangle extends Shape {
 		this.p1 = new Point(x1, y1);
 		this.p2 = new Point(x2, y2);
 		this.p3 = new Point(x3, y3);
-//		this.p1.setX(x1);
-//		this.p1.setY(y1);
-//		this.p2.setX(x2);
-//		this.p2.setY(y2);
-//		this.p3.setX(x3);
-//		this.p3.setY(y3);
 	}
 	
 	//getter, setter
@@ -48,7 +42,7 @@ public class Triangle extends Shape {
 	}
 	
 	@Override
-	public void allShapeDraw() {
+	public void draw() {
 		System.out.println(String.format("[삼각형:색(%s), 점1(%d,%d), 점2(%d,%d), 점3(%d,%d)]"
 			, this.getColor(), this.p1.getX(), this.p1.getY(), this.p2.getX(), this.p2.getY(), this.p3.getX(), this.p3.getY()));
 	}

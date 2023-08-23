@@ -13,7 +13,7 @@ public class ShapeSet { //Company와 유사한 클래스
 	
 	public void allShapeDraw() {
 		for (int i = 0; i < count; i++) {
-			shapes[i].allShapeDraw();
+			shapes[i].draw();
 		}
 	}
 	

@@ -2,16 +2,20 @@
 public class Circle extends Shape {
 	
 	//필드
-	Point center; //포함관계
+//	Point center; //(1) 참조변수만 선언 후에
 	int radius;
+	
+	//(2) 포함 객체 생성 후에
+	Point center = new Point();	 
+	
 	
 	//생성자
 	public Circle() {}
 	public Circle(String color, int x, int y, int radius) {
 		super(color);
-		this.center = new Point(x, y); 
-//		this.center.setX(x);
-//		this.center.setY(y);
+//		this.center = new Point(x, y); //(1') 생성자 안에서 포함 객체 생성하며 초기화
+		this.center.setX(x); 		   //(2') 이 생성자가 아니라 기본생성자가 생성해둔 객체의 필드값 초기화
+		this.center.setY(y);
 		this.radius = radius;
 	}
 	public Circle(String color, Point center, int radius) {
@@ -36,7 +40,7 @@ public class Circle extends Shape {
 	
 	//인스턴스메소드
 	@Override
-	public void allShapeDraw() {
+	public void draw() {
 		System.out.println(String.format("[원:색(%s), 중심점(%d,%d), 반지름(%d)]"
 										, this.getColor(), this.center.getX(), this.center.getY(), this.radius));
 		

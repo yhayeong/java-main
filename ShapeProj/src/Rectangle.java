@@ -11,8 +11,6 @@ public class Rectangle extends Shape {
 	public Rectangle(String color, int spX, int spY, int width, int height) {
 		super(color);
 		this.startPos = new Point(spX, spY);
-//		this.startPos.setX(spX);
-//		this.startPos.setY(spY);
 		this.width = width;
 		this.height = height;
 	}
@@ -43,7 +41,7 @@ public class Rectangle extends Shape {
 		this.height = height;
 	}
 	@Override
-	public void allShapeDraw() {
+	public void draw() {
 		System.out.println(String.format("[사각형:색(%s), 시작점(%d,%d), 너비(%d), 높이(%d)]"
 				, this.getColor(), this.startPos.getX(), this.startPos.getY(), this.width, this.height));
 	}

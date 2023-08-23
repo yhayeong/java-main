@@ -28,7 +28,7 @@ public abstract class Employee { //추상메소드(미완성메소드)가 하나
 	}
 	
 	
-	//인스턴스메소드
+	//메소드
 	public String info() {
 		return String.format("사번:%d, 이름:%s", id, name);
 	}

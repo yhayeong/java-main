@@ -1,5 +1,5 @@
 
-public class Shape {
+public abstract class Shape {
 	
 	//필드
 	private String color = "";
@@ -18,5 +18,7 @@ public class Shape {
 		this.color = color;
 	}
 	
+	//추상메소드
+	public abstract void allShapeDraw();
 	
 }

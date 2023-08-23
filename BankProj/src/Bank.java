@@ -1,33 +1,6 @@
 import java.util.Scanner;
 
-class Account {
-	String id;
-	String name;
-	int balance;
-	
-	Account() {}
-	Account(String id, String name, int money) {
-		this.id = id;
-		this.name = name;
-		this.balance = money;
-	}
-	
-	String info() {
-		return String.format("계좌번호:%s, 이름:%s, 잔액:%d", id, name, balance);
-	}
-	
-	void deposit(int money) {
-		balance += money;
-		System.out.println("*" + money + "원을 입금하셨습니다.");
-	}
-	
-	void withdraw(int money) {
-		if(balance>=money) {
-			balance -= money;
-			System.out.println("*" + money + "원을 출금하셨습니다.");
-		}
-	}
-}
+import acc.Account; //Bank와 다른 패키지에 있는 Account클래스 사용
 
 public class Bank {
 	
@@ -62,7 +35,8 @@ public class Bank {
 	
 	Account searchAccById(String id) {
 		for (int i = 0; i < accCnt; i++) {
-			if(accs[i].id.equals(id)) {
+//			if(accs[i].id.equals(id)) {
+			if(accs[i].getId().equals(id)) {
 				return accs[i]; //찾았다면 그걸 가지고 호출부로 간다(바로메소드종료)
 			}
 		}
@@ -97,8 +71,8 @@ public class Bank {
 		
 		System.out.print("출금액 : ");
 		int money = Integer.parseInt(sc.nextLine());
-		if(acc.balance < money) {
-			System.out.println("잔액:" + acc.balance + ", 입력금액: " + money + "\n*잔액이 부족합니다.");
+		if(acc.getBalance() < money) {
+			System.out.println("잔액:" + acc.getBalance() + ", 입력금액: " + money + "\n*잔액이 부족합니다.");
 			return;
 		} else {
 			acc.withdraw(money);

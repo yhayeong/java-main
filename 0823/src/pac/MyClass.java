@@ -17,8 +17,8 @@ public class MyClass {
 	
 	public MyClass(){}
 	//(1)
-	//자동생성된 기본생성자는 public임
-	//명시적으로 작성할때 public을 붙이지 않으면 다른 패키지의 클래스에서 MyClass 객체를 생성할때 오류 발생
+	//public클래스의 자동생성된 기본생성자는 public임
+	//명시적으로 작성할때 public을 붙이지 않으면 다른 패키지의 클래스에서 MyClass 객체를 생성할때 오류 발생***
 	
 	
 }

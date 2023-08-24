@@ -1,8 +1,9 @@
+package shape;
 
 public abstract class Shape {
 	
 	//필드
-	private String color = "";
+	private String color;
 	
 	//생성자
 	public Shape() {}

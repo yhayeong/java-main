@@ -1,3 +1,8 @@
+import shape.Circle;
+import shape.Point;
+import shape.Rectangle;
+import shape.ShapeSet;
+import shape.Triangle;
 
 public class ShapeMain {
 	public static void main(String[] args) {

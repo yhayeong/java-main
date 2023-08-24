@@ -1,10 +1,12 @@
 class Base {
+	int x = 10;
 	void method() {
 		System.out.println("Base 메소드 호출됨...");
 	}
 }
 
 class Derived extends Base {
+	int x = 20; //super.x와는 다른 변수로, 부모에게 상속받은 x가 덮어씌워지거나 사라지지 않는다...super.x를 여전히 사용할 수 있음
 	int y;
 	void method() { 				//오버라이딩
 		System.out.println("Derived 메소드 호출됨...");
@@ -30,7 +32,7 @@ public class PolinoTest3 {
 		*/
 		
 		
-//		base1.y = 20; 					//base1이 부모인 Base타입 참조변수기 때문에 자식인 Derived클래스의 멤버에 접근불가
+//		base.y = 20; 					//base1이 부모인 Base타입 참조변수기 때문에 자식인 Derived클래스의 멤버에 접근불가
 		
 		Derived derived = (Derived) base; //다운캐스팅
 		derived.y = 20;

@@ -1,3 +1,4 @@
+package shape;
 
 public class Point {
 	
@@ -24,6 +25,11 @@ public class Point {
 	}
 	public void setY(int y) {
 		this.y = y;
+	}
+	
+	//인스턴스메소드
+	public String info() {
+		return x + "," + y;
 	}
 
 	

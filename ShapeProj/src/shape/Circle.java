@@ -1,3 +1,4 @@
+package shape;
 
 public class Circle extends Shape {
 	
@@ -10,7 +11,12 @@ public class Circle extends Shape {
 	
 	
 	//생성자
-	public Circle() {}
+	public Circle() {} 					//(2')
+//	public Circle() { 				   	//(1')
+//		super("black");
+//		center = new Point();
+//	}
+	
 	public Circle(String color, int x, int y, int radius) {
 		super(color);
 //		this.center = new Point(x, y); //(1') 생성자 안에서 포함 객체 생성하며 초기화
@@ -41,8 +47,10 @@ public class Circle extends Shape {
 	//인스턴스메소드
 	@Override
 	public void draw() {
-		System.out.println(String.format("[원:색(%s), 중심점(%d,%d), 반지름(%d)]"
-										, this.getColor(), this.center.getX(), this.center.getY(), this.radius));
+//		System.out.println(String.format("[원:색(%s), 중심점(%d,%d), 반지름(%d)]"
+//										, this.getColor(), this.center.getX(), this.center.getY(), this.radius));
+		System.out.println(String.format("[원:색(%s), 중심점(%s), 반지름(%d)]"
+				, this.getColor(), this.center.info(), this.radius));
 		
 	}
 	

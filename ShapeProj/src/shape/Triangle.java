@@ -1,3 +1,4 @@
+package shape;
 
 public class Triangle extends Shape {
 	
@@ -12,7 +13,13 @@ public class Triangle extends Shape {
 //	private Point p3 = new Point();
 	
 	//생성자
-	public Triangle() {}
+//	public Triangle() {}
+	public Triangle() {
+		super("black");
+		this.p1 = new Point();
+		this.p2 = new Point();
+		this.p3 = new Point();
+	}
 	public Triangle(String color, Point p1, Point p2, Point p3) {
 		super(color);
 		this.p1 = p1;
@@ -53,11 +60,14 @@ public class Triangle extends Shape {
 	public void setP3(Point p3) {
 		this.p3 = p3;
 	}
-	
+
+	//인스턴스메소드
 	@Override
 	public void draw() {
-		System.out.println(String.format("[삼각형:색(%s), 점1(%d,%d), 점2(%d,%d), 점3(%d,%d)]"
-			, this.getColor(), this.p1.getX(), this.p1.getY(), this.p2.getX(), this.p2.getY(), this.p3.getX(), this.p3.getY()));
+//		System.out.println(String.format("[삼각형:색(%s), 점1(%d,%d), 점2(%d,%d), 점3(%d,%d)]"
+//			, this.getColor(), this.p1.getX(), this.p1.getY(), this.p2.getX(), this.p2.getY(), this.p3.getX(), this.p3.getY()));
+		System.out.println(String.format("[삼각형:색(%s), 점1(%s), 점2(%s), 점3(%s)]"
+				, this.getColor(), this.p1.info(), this.p2.info(), this.p3.info()));
 	}
 	
 	

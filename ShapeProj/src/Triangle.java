@@ -2,9 +2,14 @@
 public class Triangle extends Shape {
 	
 	//필드
+	//(1)
 	private Point p1;
 	private Point p2;
 	private Point p3;
+	//(2)
+//	private Point p1 = new Point();
+//	private Point p2 = new Point();
+//	private Point p3 = new Point();
 	
 	//생성자
 	public Triangle() {}
@@ -16,9 +21,17 @@ public class Triangle extends Shape {
 	}
 	public Triangle(String color, int x1, int y1, int x2, int y2, int x3, int y3) {
 		super(color);
+		//(1')
 		this.p1 = new Point(x1, y1);
 		this.p2 = new Point(x2, y2);
 		this.p3 = new Point(x3, y3);
+		//(2')
+//		this.p1.setX(x1);
+//		this.p1.setY(y1);
+//		this.p2.setX(x2);
+//		this.p2.setY(y2);
+//		this.p3.setX(x3);
+//		this.p3.setY(y3);
 	}
 	
 	//getter, setter

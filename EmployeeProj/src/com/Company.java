@@ -46,7 +46,7 @@ public class Company {
 	
 	public static void main(String[] args) {
 		
-		//Company클래스의 main메소드가 Company클래스의 인스턴스메소드를 사용하기 위해서는 객체생성하여 참조변수를 이용해야함
+		//Company클래스의 스태틱 main메소드가 Company클래스의 인스턴스메소드를 사용하기 위해서는 객체생성하여 참조변수를 이용해야함
 		Company com = new Company();
 		
 		//직원을 생성한다

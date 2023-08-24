@@ -19,8 +19,8 @@ public class InheritTest2 {
 	public static void main(String[] args) {
 		Base b = new Base();
 		b.bnum = 10;
-		b.methodA();
-		b.methodB();
+		b.methodA();//1
+		b.methodB();//2
 		
 		System.out.println("***");
 		

@@ -21,12 +21,12 @@ class Circle extends Shape {
 public class PolinoTest1 {
 	
 	public static void main(String[] args) {
-		Circle c = new Circle(); //기존
+		Circle c = new Circle();
 		c.color = "red";
 		c.x = 10;
 		c.draw();
 		
-		System.out.println("=============================================================");
+		System.out.println("다형성=============================================================");
 		
 		Shape s = new Circle(); //upcasting 자식객체를 생성하면서 그 주소를 부모타입 참조변수에 넣는거
 		s.color = "blue";

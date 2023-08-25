@@ -1,6 +1,6 @@
 package emp;
 
-public class PartTime extends Employee {
+public class PartTime extends Employee implements BusinessTripable {
 	
 	//필드
 	private int time;
@@ -30,12 +30,19 @@ public class PartTime extends Employee {
 	
 	//인스턴스메소드
 	public int getPay() {
-		return getTime() * getPayPerTime();
+		return getTime() * getPayPerTime(); 
 	}
+	
+	
 	@Override
 	public String info() {
 		return super.info() + ", 급여:" + this.getPay();
 	}
 	
+	//부모인터페이스의 메소드를 오버라이딩
+	@Override
+	public void payIncentive(int tripDays) {
+		setTime(getTime()+tripDays*24); //payPerTime에 곱해지는 time을 변경해주는 setter 호출
+	}
 
 }

@@ -1,6 +1,6 @@
 package emp;
 
-public class Sales extends Permanent {
+public class Sales extends Permanent implements BusinessTripable {
 
 	//필드
 	private int incentive;
@@ -26,7 +26,11 @@ public class Sales extends Permanent {
 		return super.getPay() + getIncentive();
 	}
 	
-	
+	//부모인터페이스의 메소드를 오버라이딩
+	@Override
+	public void payIncentive(int tripDays) {
+		incentive += tripDays*300000; //기존급여에 출장인센티브를 더해준다
+	}
 	
 	
 	//getInfo() 메소드를 오버라이딩하지 않고 main에서 호출했을때

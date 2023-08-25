@@ -1,8 +1,8 @@
 package acc;
 
 public class SpecialAccount extends Account {
-	String[] gradeList = {"VIP", "Gold", "Silver", "Normal"}; //등급유형관리
-	double[] bonusPercent = {0.04, 0.03, 0.02, 0.01};
+	String[] gradeList = {"VIP", "Gold", "Silver", "Normal"}; //등급 유형 관리
+	double[] bonusPercent = {0.04, 0.03, 0.02, 0.01};		  //등급별 이율 관리
 	String grade;
 	
 	public SpecialAccount() {}
@@ -35,13 +35,15 @@ public class SpecialAccount extends Account {
 	}
 	@Override
 	public void deposit(int money) {
-//		switch(this.grade) {
-//		case "VIP" : balance += money*1.04; break;
-//		case "Gold" : balance += money*1.03; break;
-//		case "Silver" : balance += money*1.02; break;
-//		case "Normal" : balance += money*1.01; break;
-//		}
-//		System.out.println("*" + money + "원을 입금하셨습니다.");
+		
+		int previousBalance = this.balance;
+		switch(this.grade) {
+		case "VIP" : balance += money*1.04; break;
+		case "Gold" : balance += money*1.03; break;
+		case "Silver" : balance += money*1.02; break;
+		case "Normal" : balance += money*1.01; break;
+		}
+		System.out.println("*" + money + "원을 입금하셨고, " + (this.balance-previousBalance-money) + "를 이자로 지급받으셨습니다.");
 		
 //		super.deposit(money);
 //		switch(this.grade) {
@@ -51,11 +53,11 @@ public class SpecialAccount extends Account {
 //		case "Normal" : balance += money*0.01; break;
 //		}
 		
-		super.deposit(money);
-		if(this.grade.equals(gradeList[0])) balance += money*bonusPercent[0];
-		else if(this.grade.equals(gradeList[1])) balance += money*bonusPercent[1];
-		else if(this.grade.equals(gradeList[2])) balance += money*bonusPercent[2];
-		else if(this.grade.equals(gradeList[3])) balance += money*bonusPercent[3];
+//		super.deposit(money);
+//		if(this.grade.equals(gradeList[0])) balance += money*bonusPercent[0];
+//		else if(this.grade.equals(gradeList[1])) balance += money*bonusPercent[1];
+//		else if(this.grade.equals(gradeList[2])) balance += money*bonusPercent[2];
+//		else if(this.grade.equals(gradeList[3])) balance += money*bonusPercent[3];
 		
 	}
 }

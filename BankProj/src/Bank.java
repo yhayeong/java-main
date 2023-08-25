@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import acc.Account; //Bank와 다른 패키지에 있는 Account클래스 사용
 import acc.SpecialAccount;
+import acc.SpecialAccount_Teacher;
 
 public class Bank {
 	
@@ -50,6 +51,15 @@ public class Bank {
 		System.out.println("[일반계좌 개설]");
 		System.out.print("계좌번호 : ");
 		String id = sc.nextLine();
+		
+		//중복체크 코드 추가---------------------------------
+		Account searchedAcc = searchAccById(id);
+		if(searchedAcc!=null) {
+			System.out.println("계좌번호가 중복됩니다.");
+			return;
+		}
+		//------------------------------------------------
+		
 		System.out.print("이름 : ");
 		String name = sc.nextLine();
 		System.out.print("입금액 : ");
@@ -69,7 +79,8 @@ public class Bank {
 		System.out.print("등급(VIP-V, Gold-G, Silver-S, Normal-N) : ");
 		String grade = sc.nextLine().toUpperCase();
 		
-		accs[accCnt++] = new SpecialAccount(id, name, money, grade);
+//		accs[accCnt++] = new SpecialAccount(id, name, money, grade);
+		accs[accCnt++] = new SpecialAccount_Teacher(id, name, money, grade);
 	}
 	
 	
@@ -83,6 +94,13 @@ public class Bank {
 		return null; 
 	}
 	
+	
+	/*  
+	다형성의 장점을 확인:
+	<<<상속,업캐스팅(SpecialAccount를 생성하여 Account[] 배열에 담음),오버라이딩>>>을 통해서 
+	Account타입 참조변수 acc로 호출하는 deposit(int money)은 자식에서 오버라이딩한 메소드이다 - 다운캐스팅 필요없이 알아서 자식의 오버라이딩메소드를 호출함
+	즉 SpecialAccount같은 클래스를 추가하게 될때, 기존에 메소드 호출코드를 일일히 코드를 변경하지 않아도 된다!
+	*/
 	void deposit() {
 		System.out.println("[입금]");
 		System.out.print("계좌번호 : ");

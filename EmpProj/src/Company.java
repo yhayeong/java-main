@@ -21,4 +21,14 @@ public class Company {
 		}
 		return tot;
 	}
-}
+	
+	/*------------0825 과제
+	출장 직원 등록 (출장직원에게 인센티브 지급하기)
+	Sales와 PartTime만 출장이 가능하며 둘의 출장비용(인센티브)이 다르다
+	Sales, PartTime, Permanent 셋 다 Employee를 상속하는데, 둘만 출장가능하도록 그룹핑하려면 인터페이스를 둘이 상속하게해야함
+	*/
+//	public void regBusinessTrip(... emp, int day) {
+//		
+//	}
+	
+}//Company

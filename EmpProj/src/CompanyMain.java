@@ -21,6 +21,14 @@ public class CompanyMain {
 		com.allEmployeeInfo();
 		System.out.println("총급여액: " + com.getTotalPay());
 		
+		
+		//----------------0825 과제
+	/*	
+		com.regBusinessTrip(emp1,1); //Permanent인스턴스는 출장불가능하게할것
+		com.regBusinessTrip(emp2,2);  //Sales 출장가능, 하루당 300000원을 incentive로 지급할것
+		com.regBusinessTrip(emp3,3);  //PartTime 출장가능, (출장시간(1일24시간) * payPerTime)원을 incentive로 지급할것
+	*/	
+		
 	}
 
 }

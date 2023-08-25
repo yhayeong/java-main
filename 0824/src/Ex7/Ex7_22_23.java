@@ -1,5 +1,7 @@
 package Ex7;
 
+import java.util.Iterator;
+
 //과제 Ex7_22~23
 
 abstract class Shape {
@@ -65,6 +67,11 @@ class Circle extends Shape {
 		super(p);
 		this.r = r;
 	}
+	
+	public Circle(double r) {
+//		super();
+		this.r = r;
+	}
 
 
 	//메소드
@@ -106,7 +113,7 @@ class Rectangle extends Shape {
 	
 	//생성자
 	public Rectangle() {
-//		super();
+//		super(); //자동호출됨
 		this.width = 10;
 		this.height = 10;
 	}
@@ -135,6 +142,11 @@ class Rectangle extends Shape {
 		this.width = width;
 		this.height = height;
 	}
+	public Rectangle(double width, double height) {
+//		super();
+		this.width = width;
+		this.height = height;
+	}
 	
 	//메소드
 	@Override
@@ -151,6 +163,10 @@ class Rectangle extends Shape {
 		
 	}
 	
+	public boolean isSquare() {
+		return width == height;
+	}
+	
 	@Override
 	public String toString() {
 //		return "Rectangle [시작점:" + this.pos + ", 너비:" + width + ", 높이:" + height + ", 넓이:" + this.calcArea() + "]";
@@ -163,6 +179,15 @@ class Rectangle extends Shape {
 
 
 public class Ex7_22_23 {
+	
+	//스태틱인 main메소드에서 바로 사용하기 위해 스태틱메소드로 만든다
+	public static double sumArea(Shape[] shapes) {
+		double sum = 0;
+		for (int i= 0;  i < shapes.length; i++) {
+			sum += shapes[i].calcArea();
+		}
+		return sum;
+	}
 
 	public static void main(String[] args) {
 		
@@ -200,6 +225,12 @@ public class Ex7_22_23 {
 		System.out.println("s2의 중심점: " + s2.getPosition()); 
 		System.out.println("rec3의 시작점: " + rec3.getPosition());
 		//(오버라이딩하지 않은)부모에게 상속받은 메소드를 사용하는데, 메소드가 반환하는 Point는 자식의 멤버->다형성
+	
+		
+		Shape[] arr = {new Circle(5.0), new Rectangle(3,4), new Circle(1)};
+		System.out.println("원1, 사각형1, 원2의 면적의 합 : " + sumArea(arr));
 		
 	}
+	
+	
 }

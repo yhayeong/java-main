@@ -99,7 +99,7 @@ public class Bank {
 	다형성의 장점을 확인:
 	<<<상속,업캐스팅(SpecialAccount를 생성하여 Account[] 배열에 담음),오버라이딩>>>을 통해서 
 	Account타입 참조변수 acc로 호출하는 deposit(int money)은 자식에서 오버라이딩한 메소드이다 - 다운캐스팅 필요없이 알아서 자식의 오버라이딩메소드를 호출함
-	즉 SpecialAccount같은 클래스를 추가하게 될때, 기존에 메소드 호출코드를 일일히 코드를 변경하지 않아도 된다!
+	즉 SpecialAccount같은 클래스를 추가하게 될때, 기존에 작성한 메소드 호출코드를 일일이 코드를 변경하지 않아도 된다!
 	*/
 	void deposit() {
 		System.out.println("[입금]");
@@ -177,9 +177,9 @@ public class Bank {
 				case 5: bank.allAccountInfo(); break;
 			}
 				
-		}
+		}//while
 		
 		
-	}
+	}//main
 
-}
+}//Bank

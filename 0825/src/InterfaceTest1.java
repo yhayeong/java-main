@@ -48,11 +48,11 @@ public class InterfaceTest1 {
 		Unit f2 = fighter;
 		Object f3 = fighter;
 		
-		fighter.fight();
-//		fighter.move();	 //클래스 업캐스팅의 경우와 마찬가지로 부모타입의 참조변수로 자식에만 있는 메소드를 호출할 수 없다
+		f1.fight();
+//		f1.move();	 //부모타입의 참조변수로 자식에만 있는 메소드를 호출할 수 없다
 		
 		
-		Helper helper = new Helper(); //업캐스팅
+		Helper helper = new Helper();
 		Helping h1 = helper;
 		Unit h2 = helper;
 		Object h3 = helper;
@@ -68,7 +68,7 @@ public class InterfaceTest1 {
 		
 		method1(fighter);
 		method1(comber);
-//		method1(helper); //이 문장만 error나도록 하려면 method1의 매개변수로 Fightable변수를 받도록 선언한다(fighter, comber의 공통부모이자 helper는 아닌)
+//		method1(helper); //이 문장만 error나도록 하려면 method1의 매개변수로 (Helper만 상속하지않은)Fightable변수를 받도록 선언한다
 		
 //		method2(fighter);
 		method2(comber);
@@ -117,7 +117,7 @@ public class InterfaceTest1 {
 	
 	/*
 	 다중상속의 장점 :
-	  상속관계로 묶이지 않은 클래스끼리의 관계를 만들고싶을때 
+	  부모가 서로 다른 클래스끼리의 관계를 만들고싶을때 
 	  인터페이스를 껍데기로만 만들어두고 그것을 상속했는지 여부를 통해서 특정 클래스들을 한 그룹으로 취급하여 다룰 수 있게 된다
 	  
 	 

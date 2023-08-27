@@ -23,7 +23,7 @@ public class Account {
 		System.out.println("*" + money + "원을 입금하셨습니다.");
 	}
 	
-	public void withdraw(int money) {
+	public void withdraw(int money) { 
 		if(balance>=money) {
 			balance -= money;
 			System.out.println("*" + money + "원을 출금하셨습니다.");
@@ -35,7 +35,7 @@ public class Account {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getName() {
+	public String getName() { 
 		return name;
 	}
 	public void setName(String name) {

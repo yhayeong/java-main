@@ -1,5 +1,6 @@
 public class ExceptionTest4 {
 
+//(1)
 //	public static void method1() {
 //		String str = null;
 //		try {

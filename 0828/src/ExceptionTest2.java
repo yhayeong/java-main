@@ -6,7 +6,7 @@ public class ExceptionTest2 {
 		
 		try {
 			for (int i = 0; i < arr1.length; i++) {
-				System.out.print(arr1[i]/arr2[i]); //0로 나누는 회차 때문에 죽음
+				System.out.print(arr1[i]/arr2[i]); //0로 나누는 회차 때문에 예외발생
 			}
 		} catch (ArithmeticException e) {
 			System.out.println("--------------------");

@@ -12,7 +12,7 @@ public class Bank {
 	
 	Scanner sc = new Scanner(System.in);
 	
-	int menu() throws NumberFormatException { //RuntimeException(과 그 자식)의 경우에는 위임하겠다는 trows~를 생략할 수 있다 				
+	int menu() throws BankException { //<3-2>
 		System.out.println("[코스타 은행]");
 		System.out.println("1. 계좌개설");
 		System.out.println("2. 입금");
@@ -49,13 +49,14 @@ public class Bank {
 		//<3-1> 여기서 예외처리
 		int sel = Integer.parseInt(sc.nextLine());
 		if(!(sel>=0 && sel<=5)) {
-			try {
-				throw new BankException("메뉴오류", BankError.MENU); //예외 발생할 경우에 예외를 발생시키는것(메시지와 약속된 에러코드를 인자로 주면서)
+//			try {
+				throw new BankException("메뉴오류", BankError.MENU); //예외 발생할 경우에 예외를 발생시키는것(메시지와 약속된 에러코드를 인자로 주면서) 
+				//<3-2>try~ 주석하고 throw만 남기고 메소드 선언부에 throws~하면 호출부인메인으로 돌아가서 거기서 예외처리하게하는것
 			
-			} catch (BankException e) {
-				System.out.println(e); //e.toString으로 자동호출됨 (BankException클래스의 toString이 호출됨)
-				menu();
-			}
+//			} catch (BankException e) {
+//				System.out.println(e); //e.toString으로 자동호출됨 (BankException클래스의 toString이 호출됨)
+//				menu();
+//			}
 		}
 		return sel;
 		
@@ -251,6 +252,8 @@ public class Bank {
 				
 			} catch (NumberFormatException e) {
 				System.out.println("입력형식이 맞지 않습니다. 다시 선택하세요 ");
+			} catch (BankException e) {
+				System.out.println(e);
 			}
 				
 		}//while

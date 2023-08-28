@@ -23,7 +23,7 @@ public class BankException extends Exception {
 		case NOID : msg += "계좌번호 오류입니다."; break;
 		case EXISTID : msg += "계좌번호가 중복됩니다."; break;
 		case LACK : msg += "잔액이 부족합니다."; break;
-		case MINUS : msg += "입금액 오류입니다."; break;
+		case MINUS : msg += "금액입력 오류입니다."; break;
 		case MENU : msg += "잘못 선택하셨습니다."; break;
 		default : msg += "일반 오류입니다."; break;
 		}

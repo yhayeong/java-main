@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
 import acc.Account; //Bank와 다른 패키지에 있는 Account클래스 사용
-import acc.SpecialAccount;
 import acc.SpecialAccount_Teacher;
+import exception.BankError;
+import exception.BankException;
 
 public class Bank {
 	
@@ -37,24 +38,36 @@ public class Bank {
  
  */
 		
-		//try-catch로 감싸지 않고 메소드선언부에 throws~하면 호출부로 예외를 위임하는것
-		return Integer.parseInt(sc.nextLine());
-	}
+		
+		//<2>try-catch로 감싸지 않고 메소드선언부에 throws~하면 호출부로 예외를 위임하는것
+//		return Integer.parseInt(sc.nextLine());
+		
+		
+		
+		//<3>====================BankError예외클래스 추가하여 작성
+		
+		//<3-1> 여기서 예외처리
+		int sel = Integer.parseInt(sc.nextLine());
+		if(!(sel>=0 && sel<=5)) {
+			try {
+				throw new BankException("메뉴오류", BankError.MENU); //예외 발생할 경우에 예외를 발생시키는것(메시지와 약속된 에러코드를 인자로 주면서)
+			
+			} catch (BankException e) {
+				System.out.println(e); //e.toString으로 자동호출됨 (BankException클래스의 toString이 호출됨)
+				menu();
+			}
+		}
+		return sel;
+		
+		
+		//<3-2> 호출부로 예외 위임시키기
+//		int sel = Integer.parseInt(sc.nextLine());
+//		if(!(sel>=0 && sel<=5)) throw new BankException("메뉴오류", BankError.MENU);
+//		return sel;
+			
+		
+	}//menu()메소드
 	
-	
-	
-	
-	/*
-	 문제 : 특수계좌 SpecialAccount를 추가하여라  
-	1. Account 에 grade(등급)을 추가함. 등급의 종류는 VIP, Gold, Silver, Normal
-​
-	2. 등급에 따라 차등으로 입금할때마다 이자를 준다. 단, 계좌개설시점의 입금은 제외
-	등급에 따라 입금액의 몇퍼 지급 : VIP는 0.04, Gold 0.03, Silver 0.02, Normal 0.01	
-	예를들어 VIP가 10000원 입금시 10000+10000*0.04가 입금된다 => 입금액 * 1.04
-​
-	3. 정보출력시 등급도 포함
-	계좌번호:1001, 이름:홍길동, 잔액:100000, 등급:VIP
-	 */
 	
 	void selAccMenu() {
 		System.out.println("[계좌개설]");
@@ -62,9 +75,22 @@ public class Bank {
 		System.out.println("2. 특수계좌");
 		System.out.print("선택> ");
 		int sel = Integer.parseInt(sc.nextLine());
-		if(sel==1) makeAccount();
-		else if(sel==2) makeSpecialAccount();
-	}
+//		if(sel==1) makeAccount();
+//		else if(sel==2) makeSpecialAccount();
+		
+		//<3> BankException만들고 예외처리
+		switch (sel) {
+		case 1: makeAccount(); break;
+		case 2: makeSpecialAccount(); break;
+		default: 
+			try {
+				throw new BankException("메뉴오류", BankError.MENU); 
+			} catch (BankException e) {
+				System.out.println(e);
+				selAccMenu();
+			}
+		}
+	}//selAccMenu()
 	
 	
 	void makeAccount() {
@@ -74,11 +100,16 @@ public class Bank {
 		
 		//중복체크 코드 추가---------------------------------
 		Account searchedAcc = searchAccById(id);
-		if(searchedAcc!=null) {
-			System.out.println("계좌번호가 중복됩니다.");
-			return;
+//		if(searchedAcc!=null) {
+//			System.out.println("계좌번호가 중복됩니다.");
+//			return;
+//		}
+		try {
+			if(searchedAcc!=null) throw new BankException("중복계좌", BankError.EXISTID);
+		} catch (Exception e) {
+			System.out.println(e);
+			makeAccount();
 		}
-		//------------------------------------------------
 		
 		System.out.print("이름 : ");
 		String name = sc.nextLine();
@@ -92,6 +123,13 @@ public class Bank {
 		System.out.println("[특수계좌 개설]");
 		System.out.print("계좌번호 : ");
 		String id = sc.nextLine();
+		Account searchedAcc = searchAccById(id);
+		try {
+			if(searchedAcc!=null) throw new BankException("중복계좌", BankError.EXISTID);
+		} catch (Exception e) {
+			System.out.println(e);
+			makeAccount();
+		}
 		System.out.print("이름 : ");
 		String name = sc.nextLine();
 		System.out.print("입금액 : ");
@@ -106,7 +144,6 @@ public class Bank {
 	
 	Account searchAccById(String id) {
 		for (int i = 0; i < accCnt; i++) {
-//			if(accs[i].id.equals(id)) {	//Account의 id가 public이 아닌데 패키지가 다르므로 접근불가
 			if(accs[i].getId().equals(id)) {
 				return accs[i]; //찾았다면 그걸 가지고 호출부로 간다(바로메소드종료)
 			}
@@ -114,27 +151,28 @@ public class Bank {
 		return null; 
 	}
 	
-	
-	/*  
-	다형성의 장점을 확인:
-	<<<상속,업캐스팅(SpecialAccount를 생성하여 Account[] 배열에 담음),오버라이딩>>>을 통해서 
-	Account타입 참조변수 acc로 호출하는 deposit(int money)은 자식에서 오버라이딩한 메소드이다 - 다운캐스팅 필요없이 알아서 자식의 오버라이딩메소드를 호출함
-	즉 SpecialAccount같은 클래스를 추가하게 될때, 기존에 작성한 메소드 호출코드를 일일이 코드를 변경하지 않아도 된다!
-	*/
 	void deposit() {
 		System.out.println("[입금]");
 		System.out.print("계좌번호 : ");
 		String id = sc.nextLine();
 		
 		Account acc = searchAccById(id); //입력한 id가 없다면 null값을 반환받을것
-		if(acc ==null) {
-			System.out.println("계좌번호가 틀립니다.");
-			return;
+//		if(acc ==null) {
+//			System.out.println("계좌번호가 틀립니다.");
+//			return;
+//		}
+		//<3>
+		try {
+			if(acc==null) throw new BankException("계좌오류", BankError.NOID);
+		} catch (BankException e) {
+			System.out.println(e);
+			deposit();
 		}
 		
 		System.out.print("입금액 : ");
 		int money = Integer.parseInt(sc.nextLine());
 		acc.deposit(money);
+		
 	}
 	
 	void withdraw() {
@@ -142,9 +180,16 @@ public class Bank {
 		String id = sc.nextLine();
 		
 		Account acc = searchAccById(id);
-		if(acc == null) {
-			System.out.println("계좌번호가 틀립니다.");
-			return;
+//		if(acc == null) {
+//			System.out.println("계좌번호가 틀립니다.");
+//			return;
+//		}
+		//<3>
+		try {
+			if(acc==null) throw new BankException("계좌오류", BankError.NOID);
+		} catch (BankException e) {
+			System.out.println(e);
+			withdraw();
 		}
 		
 		System.out.print("출금액 : ");
@@ -162,9 +207,16 @@ public class Bank {
 		System.out.print("계좌번호 : ");
 		String id = sc.nextLine();
 		Account acc = searchAccById(id);
-		if(acc==null) {
-			System.out.println("계좌번호가 틀립니다.");
-			return;
+//		if(acc==null) {
+//			System.out.println("계좌번호가 틀립니다.");
+//			return;
+//		}
+		//<3>
+		try {
+			if(acc==null) throw new BankException("계좌오류", BankError.NOID);
+		} catch (BankException e) {
+			System.out.println(e);
+			accountInfo();
 		}
 		System.out.println(acc.info());
 	}
@@ -180,9 +232,7 @@ public class Bank {
 	
 	
 	public static void main(String[] args) { 
-		//같은 클래스내의 메소드를 호출하는데도 객체 생성하는 이유
-		//스태틱메소드 안에서는 같은 스태틱메소드가 아니라면 레퍼런스를 통해서 인스턴스메소드를 호출해야한다
-		
+	
 		Bank bank = new Bank();
 		int sel;
 		

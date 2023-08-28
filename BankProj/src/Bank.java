@@ -86,8 +86,8 @@ public class Bank {
 				return accs[i]; //찾았다면 그걸 가지고 호출부로 간다(바로메소드종료)
 			}
 		}
-//		return null; 
-		throw new BankException("계좌오류", BankError.NOID);
+		return null; 
+//		throw new BankException("계좌오류", BankError.NOID); //여기서는 오류발생시키면 안된다. null을 호출부로 들고간 경우에 계좌개설돼야하므로
 	}
 	
 	void deposit() throws BankException {
@@ -99,7 +99,7 @@ public class Bank {
 		if(acc==null) throw new BankException("계좌오류", BankError.NOID);
 		System.out.print("입금액 : ");
 		int money = Integer.parseInt(sc.nextLine());
-		if(money<0) throw new BankException("금액오류", BankError.MINUS);
+		//+ Account쪽의 deposit에서 예외 발생시킴
 		acc.deposit(money);
 		
 	}
@@ -113,11 +113,7 @@ public class Bank {
 		if(acc==null) throw new BankException("계좌오류", BankError.NOID);
 		System.out.print("출금액 : ");
 		int money = Integer.parseInt(sc.nextLine());
-		if(acc.getBalance() < money) {
-			throw new BankException("잔액부족", BankError.LACK);
-		} else if(money<0) {
-			throw new BankException("금액오류", BankError.MINUS);
-		}
+		//+ Account쪽의 withdraw에서 예외 발생시킴
 		acc.withdraw(money);
 	}
 	
@@ -159,8 +155,11 @@ public class Bank {
 				
 			} catch (NumberFormatException e) {
 				System.out.println("입력형식이 맞지 않습니다. 다시 선택하세요 ");
-			} catch (BankException e) {
+				
+			} catch (BankException e) { 
 				System.out.println(e);
+				//에러 발생시킨 메소드쪽에서 호출부인 main으로 위임처리하여 이곳 catch가 예외들을 받는데, 
+				//각각 에러발생부에서 new할때 다른 메시지와 에러코드를 넣어서 생성한것이 들어오기 때문에 각각 toString의 결과는 다르다
 			}
 				
 		}//while

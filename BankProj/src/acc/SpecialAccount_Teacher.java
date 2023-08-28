@@ -1,5 +1,7 @@
 package acc;
 
+import exception.BankException;
+
 public class SpecialAccount_Teacher extends Account {
 	
 	String grade = "Normal"; //아래 setGrade메소드의 케이스들에 해당하지 않으면 Normal로 초기화되게함
@@ -32,7 +34,7 @@ public class SpecialAccount_Teacher extends Account {
 
 
 	@Override
-	public void deposit(int money) {
+	public void deposit(int money) throws BankException { 
 		super.deposit((int)(Math.round(money+money*interest)));
 	}
 

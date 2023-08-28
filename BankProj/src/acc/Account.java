@@ -17,7 +17,8 @@ public class Account {
 		this.balance = money;
 	}
 	
-	public String info() {
+	@Override
+	public String toString() {
 		return String.format("계좌번호:%s, 이름:%s, 잔액:%d", id, name, balance);
 	}
 	

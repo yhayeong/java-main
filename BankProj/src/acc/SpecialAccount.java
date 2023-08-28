@@ -30,8 +30,8 @@ public class SpecialAccount extends Account {
 	}
 	
 	@Override
-	public String info() {
-		return super.info() + ", 등급:" + this.grade;
+	public String toString() {
+		return super.toString() + ", 등급:" + grade;
 	}
 	@Override
 	public void deposit(int money) {

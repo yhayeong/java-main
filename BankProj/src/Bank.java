@@ -88,6 +88,7 @@ public class Bank {
 		}
 		return null; 
 //		throw new BankException("계좌오류", BankError.NOID); //여기서는 오류발생시키면 안된다. null을 호출부로 들고간 경우에 계좌개설돼야하므로
+		//null인 경우와 null이 아닌 경우 모두 return값이 의미가 있기 때문
 	}
 	
 	void deposit() throws BankException {
@@ -122,14 +123,16 @@ public class Bank {
 		String id = sc.nextLine();
 		Account acc = searchAccById(id);
 		if(acc==null) throw new BankException("계좌오류", BankError.NOID);
-		System.out.println(acc.info());
+//		System.out.println(acc.toString());
+		System.out.println(acc);
 	}
 	
 	void allAccountInfo() {
 		System.out.println("개설계좌수: " + accCnt);
 		
 		for (int i = 0; i < accCnt; i++) {
-			System.out.println(accs[i].info());
+//			System.out.println(accs[i].toString());
+			System.out.println(accs[i]);
 		}
 	}
 	

@@ -29,9 +29,8 @@ public class Company {
 	Sales, PartTime, Permanent 셋 다 Employee를 상속하는데, 둘만 출장가능하도록 그룹핑하려면 인터페이스를 둘이 상속하게해야함
 	*/
 	public void regBusinessTrip(BusinessTripable emp, int tripDays) { //매개변수로 BusinessTrip을 상속받은 타입의 인스턴스만 들어올수있음
-		int tripIncentive = 0;
 		if(emp instanceof Employee) {
-			emp.payIncentive(tripDays);
+			emp.goBusinessTrip(tripDays);
 		}
 	}
 	

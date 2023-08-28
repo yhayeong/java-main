@@ -28,7 +28,7 @@ public class Sales extends Permanent implements BusinessTripable {
 	
 	//부모인터페이스의 메소드를 오버라이딩
 	@Override
-	public void payIncentive(int tripDays) {
+	public void goBusinessTrip(int tripDays) {
 		incentive += tripDays*300000; //기존급여에 출장인센티브를 더해준다
 	}
 	

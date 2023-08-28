@@ -37,7 +37,7 @@ public class Bank {
  
  */
 		
-		//예외처리 하지 않으면 호출부로 간다
+		//try-catch로 감싸지 않고 메소드선언부에 throws~하면 호출부로 예외를 위임하는것
 		return Integer.parseInt(sc.nextLine());
 	}
 	

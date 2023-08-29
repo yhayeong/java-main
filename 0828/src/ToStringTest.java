@@ -14,16 +14,14 @@ class Person {
 		return "Person [name=" + name + ", age=" + age + "]";
 	}
 	
-	//논리적으로 사용하기 위해서... 두개의 내용물이 같은 경우에 true를 반환하도록 equals메소드를 오버라이딩해서 사용하기 
+	//두개의 내용물이 같은 경우에 true를 반환하도록 equals메소드를 오버라이딩해서 사용하기 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof Person == false) return false; //갖고온 파라미터의 타입이 Person이 아니면 바로 false를 반환한다. 비교할 필요도 없음
+		if(obj instanceof Person == false) return false; //갖고온 파라미터의 타입이 Person이 아니면 바로 false를 반환한다. 내용물 데이터를 비교할 필요도 없음
 		
 		Person p = (Person)obj;
 		return name.equals(p.name) && age==p.age;
 	}
-	
-	
 }
 
 

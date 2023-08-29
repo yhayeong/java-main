@@ -29,7 +29,7 @@ class LoginClick implements IClick {
 
 
 
-public class InterfaceTest3 {
+public class InterfaceTest3 { //인터페이스를 이벤트함수로 사용하는 방법
 	public static void main(String[] args) {
 		
 		BasicButton loginBtn = new BasicButton();

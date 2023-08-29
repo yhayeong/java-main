@@ -37,5 +37,5 @@ public class InterfaceTest2 {
 /* 
  이렇게 
  각각의 버튼 처리를 위해서 MyButton을 매번 상속해서 사용하는 형태는 비효율적이다
- -> 싱글톤 패턴을 이용하는 InterfaceTest3
+ -> 인터페이스를 이벤트함수로 사용하는 방법인 InterfaceTest3
  * */

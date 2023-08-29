@@ -48,6 +48,23 @@ public class ToStringTest {
 		System.out.println(p1==p2); //false(주소값비교)
 		System.out.println(p1.equals(p2)); //오버라이딩하기 이전에는 false였다가 오버라이딩후에는 true
 		
+		
+		/*
+		 cf. 해시코드의 쓰임 :
+		 컬렉션 중 트리셋/트리맵의 특징은 데이터를 순서 상관없이 넣었을때 자동정렬됨
+		 문자열이나 정수형은 되지만
+		 사용자정의형은 안됨(정렬기준을 모르기때문)
+		 그리고 동일한 데이터는 못들어가게돼있음(중복을 거르는 기준이 equals도 같고 hashcode도 같은 경우에 동일한것으로 간주하게돼있음)
+		 즉 사용자정의 클래스를 넣는 경우엔 해시코들 오버라이딩해야함
+		 
+		 
+		 
+		 Object클래스의 메소드들 중 
+		 protected Object clone() : 필요시 상속받아서 오버라이딩해 쓰라는것
+		 
+		 
+		 * */
+		
 	}
 
 }

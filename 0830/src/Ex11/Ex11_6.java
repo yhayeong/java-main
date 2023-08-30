@@ -44,9 +44,18 @@ public class Ex11_6 {
 		/*
 		 * (1) 알맞은 코드를 넣어 완성하시오.
 		 */
-		TreeSet<Student> subSet = (TreeSet<Student>) tset.subSet(new Student("",1,1,from,from,from), new Student("",1,9,to,to,to));
+//		TreeSet<Student> subSet = (TreeSet<Student>) tset.subSet(new Student("",1,1,from,from,from), new Student("",1,9,to,to,to));
 													//subSet(from부터, to미포함까지)
-		return subSet.size();
+//		return subSet.size();
+		
+		
+		//국영수의 평균이 from과 to 사이에 속한 학생들의 수를 구하는 문제인거라면
+		int cnt = 0;
+		for (Student s : tset) {
+			if(from<=s.getAverage()&&s.getAverage()<to) cnt++;
+		}
+		return cnt;
+		
 	}
 
 	public static void main(String[] args) {

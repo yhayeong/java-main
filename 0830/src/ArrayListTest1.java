@@ -23,6 +23,24 @@ class Person implements Comparable<Person> { //Comparable을 상속받기: sort�
 	}
 	//Collections.sort(리스트)는 내부적으로 compareTo메소드를 호출하여 반환값이 양수면 asc정렬 음수면 des정렬하게 되어있다
 	
+	
+	
+	
+	
+	//-------------------------------------------------------HashSetTest.java
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Person==false) return false;
+		Person p = (Person)obj;
+		return name.equals(p.name) && age==p.age;
+	}
+	
+	//데이터(name, age)가 같으면 같은 해쉬코드를 반환하게끔 오버라이딩
+	@Override
+	public int hashCode() {
+		return name.hashCode() + age; //cf. 같은 int값과 Integer값은 해쉬코드가 같다
+	}
+	
 }
 
 

@@ -36,6 +36,7 @@ public class Stack_Queue_VectorTest {
 		Queue<String> queue = new LinkedList<>();
 		queue.add("Hong");
 		queue.offer("Song"); //위와 같다
+		queue.offer("Gong"); //위와 같다
 		System.out.println(queue.poll()); //삭제하고 삭제한 데이터를 리턴
 		System.out.println(queue.remove());  //같은 메소드
 		queue.clear(); //비운다

@@ -2,7 +2,7 @@ package ex9;
 
 import java.util.Arrays;
 
-public class Ex9_6 { //@@@
+public class Ex9_6 { 
 	public static String fillZero(String src, int length) {
 		/*
 		 * (1) fillZero메서드를 작성하시오. 
@@ -32,9 +32,13 @@ public class Ex9_6 { //@@@
 
 	public static void main(String[] args) {
 		String src = "12345";
-		System.out.println(fillZero(src, 10));
-		System.out.println(fillZero(src, -1));
-		System.out.println(fillZero(src, 3));
+		System.out.println(fillZero(src, 10)); //0000012345
+		System.out.println("------");
+		System.out.println(fillZero(src, -1)); //빈문자열
+		System.out.println("------");
+		System.out.println(fillZero(src, 3)); //45
+		System.out.println("------");
+		
 	}
 }
 

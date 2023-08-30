@@ -11,24 +11,41 @@ public class Ex9_10 {
 	
 	public static String format (String str, int length, int alignment) {
 		
-		if(length < str.length()) return str.substring(0, length); //str.substring(이인덱스부터,이인덱스미포함까지) / str.substring(이인덱스부터,이길이만큼)
-		else {
-			char[] carr = new char[length];
-			for (int i = 0; i < carr.length; i++) {
-				carr[i] = ' ';
-			}
-			
-			int idx = 0;
-			switch (alignment) {
-			case 0: idx=0; break;
-			case 1: idx=(length-str.length())/2; break;
-			case 2: idx=length-str.length(); break;
-			}
-			
-			System.arraycopy(str.toCharArray(), 0, carr, idx, str.length());
-			
-			return new String(carr);
+//		if(length < str.length()) return str.substring(0, length); //str.substring(이인덱스부터,이인덱스미포함까지) / str.substring(이인덱스부터,이길이만큼)
+//		else {
+//			char[] carr = new char[length];
+//			for (int i = 0; i < carr.length; i++) {
+//				carr[i] = ' ';
+//			}
+//			
+//			int idx = 0;
+//			switch (alignment) {
+////			case 0: idx=0; break;
+//			case 1: idx=(length-str.length())/2; break;
+//			case 2: idx=length-str.length(); break;
+//			}
+//			
+//			System.arraycopy(str.toCharArray(), 0, carr, idx, str.length());
+//			
+//			return new String(carr);
+//		}
+		
+		
+		//선생님 코드
+		if(length<str.length()) return str.substring(0,length);
+		char[] carr = new char[length];
+		for (int i = 0; i < carr.length; i++) carr[i]='$';
+		
+		int space = 0;
+		if(alignment==1) {
+			space = (length-str.length())/2; //가운데정렬 시작지점을 알려면 (큰배열-작은배열)/2
+		} else if(alignment==2) {
+			space = length-str.length();
 		}
+		System.arraycopy(str.toCharArray(), 0, carr, space, str.length()); 
+		return new String(carr);
+			
+		
 	}
 	
 	/*
@@ -46,10 +63,7 @@ public class Ex9_10 {
 		System.out.println(format(str, 7, 1)); // 가운데 정렬
 		System.out.println(format(str, 7, 2)); // 오른쪽 정렬
 		
-		
-//		StringBuilder sb = new StringBuilder(str.length());
-//		System.out.println("["+sb+"]");
-		
+
 		
 	}
 

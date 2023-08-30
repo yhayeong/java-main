@@ -28,7 +28,8 @@ public class Ex9_11 {
 			System.out.println(e.getMessage());
 			System.out.println("프로그램이 종료됩니다.");
 			
-			System.exit(0); //이 문장이 없다면 catch블럭이 받으면서 프로그램이 비정상종료되지 않고 예외처리를 해줌으로써
+			System.exit(0); //이 문장이 없다면 catch블럭이 받으면서 프로그램이 비정상종료되지 않고 예외처리를 해줌으로써 catch문 이후의 문장이 계속 실행되게된다.
+			//이 문장 없이 예외발생시 프로그램 종료되도록 하고싶다면 이후 문장들 전부 try문 안에 넣으면 된다(예외발생한 문장에서 catch문으로 점프하게되면서 catch문 밖의 수행문이 없으므로)
 		}
 		
 		if(from==to) System.out.println("서로 다른 두 수를 입력해 주세요.");

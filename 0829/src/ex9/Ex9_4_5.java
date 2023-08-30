@@ -1,7 +1,5 @@
 package ex9;
 
-import java.util.Iterator;
-
 public class Ex9_4_5 {
 	static void printGraph(int[] dataArr, char ch) {
 		/*

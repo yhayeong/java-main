@@ -3,27 +3,24 @@ package ex9;
 public class Ex9_9 {
 
 	public static void main(String[] args) {
-		System.out.println("(1!2@3^4~5)" + " ->   " 
-									+ delChar("(1!2@3^4~5)","~!@#$%^&*()"));
-		System.out.println("(1 2    3  4\t5)" + " -> "
-									+ delChar("(1 2   3  4\t5)", " \t"));
+		System.out.println("(1!2@@@@3^^^^4~5)" + "->" + delChar("(1!2@3^4~5)","~!@#$%^&*()"));
+		System.out.println("(1 2    3  4\t5)" + "->" + delChar("(1 2   3  4\t5)", " \t"));
 	}
 	
 	public static String delChar(String src, String delCh) {
 		
-//		StringBuilder sb = new StringBuilder(src);
-//		for (int i = 0; i < sb.length();) {
-//			char ch = sb.charAt(i);
-//			
-//			for (int j = 0; j < delCh.length();j++) {
-//				if(ch==delCh.charAt(j)) {
-//					sb.deleteCharAt(i); //deleteCharAt하게되면 전체길이가-1되어서 인덱스가 달라짐을 주의
-//				}
-//				else i++;
-//			}
-//		}
-//		return new String(sb);
-//		//공백 제거 안됨->인덱스관리못해서?
+		StringBuilder sb = new StringBuilder(src);
+		for (int i = 0; i < sb.length(); i++) {
+			char ch = sb.charAt(i);
+			
+			for (int j = 0; j < delCh.length();j++) {
+				if(ch==delCh.charAt(j)) {
+					sb.deleteCharAt(i); //deleteCharAt하게되면 전체길이가-1되어서 인덱스가 달라짐을 주의
+					i--; //인덱스가 달라짐을 고려해줘야한다 sb 길이가 줄기 때문에 인덱스도 하나 앞으로 땡겨야함
+				}
+			}
+		}
+		return new String(sb);
 
 		//(1)
 //		StringBuilder sb = new StringBuilder(src);
@@ -57,16 +54,16 @@ public class Ex9_9 {
 		
 		
 		//선생님 코드
-		StringBuilder sb = new StringBuilder(src); //가변객체인 SB여야 delete메소드 사용가능하므로 SB로 만듦
-		for (int i = 0; i < delCh.length(); i++) {
-			int idx = 0;
-			while(true) {
-				idx = sb.indexOf( delCh.charAt(i) + "", idx); //String과는 달리 SB의 indexOf는 매개변수 타입으로 char가 없으므로 문자열화하여 idx찾아낸다
-				if(idx<0) break;								//두번째 인자를 주게되면 찾을시작인덱스를 주는것
-				sb.deleteCharAt(idx); 
-			}
-		}
-		return sb.toString();
+//		StringBuilder sb = new StringBuilder(src); //가변객체인 SB여야 delete메소드 사용가능하므로 SB로 만듦
+//		for (int i = 0; i < delCh.length(); i++) {
+//			int idx = 0;
+//			while(true) {
+//				idx = sb.indexOf( delCh.charAt(i) + "", idx); //String과는 달리 SB의 indexOf는 매개변수 타입으로 char가 없으므로 문자열화하여 idx찾아낸다
+//				if(idx<0) break;								//두번째 인자를 주게되면 찾을시작인덱스를 주는것
+//				sb.deleteCharAt(idx); 
+//			}
+//		}
+//		return sb.toString();
 	    
 			
 	}//메소드

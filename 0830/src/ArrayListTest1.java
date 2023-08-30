@@ -27,7 +27,8 @@ class Person implements Comparable<Person> { //Comparable을 상속받기: sort�
 	
 	
 	
-	//-------------------------------------------------------HashSetTest.java
+	//--------------------------------------HashSetTest.java
+	//Set의 특징인 중복데이터저장x에 name,age가 같다면 같은객체로 판단하게 하기위해서 equals와 hashCode를 적절히 오버라이딩해줘야함
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Person==false) return false;
@@ -109,13 +110,8 @@ public class ArrayListTest1 {
 		//Collections.sort( 컴페어러블을 상속받은 리스트 );
 		//Collections.sort( 리스트, 비교기준메소드(를담은클래스)를만들어서넣음 );
 		
-//		요약하면:
-//
-//			Collections.sort(yourList)를 사용하여 리스트를 자연 순서대로 정렬할 수 있습니다.
-//			Collections.sort(yourList, customComparator)를 사용하여 사용자 정의 비교 규칙에 따라 리스트를 정렬할 수 있습니다.
-//			기억해주세요, 정렬 과정은 반복적으로 비교 결과를 사용하여 원하는 순서대로 요소들을 정렬하는 것입니다.
-//		
-//		
+		//Collections.sort(yourList);
+		//Collections.sort(yourList, customComparator);
 		
 	}//main
 	

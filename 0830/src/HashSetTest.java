@@ -11,11 +11,8 @@ public class HashSetTest {
 //		hset.add(8);
 //		hset.add(11);
 //		hset.add(11);
-		//1. 차례대로 들어가지 않고 ->Hash의 특징 (내부적으로, 자바가 제공하는 Hash함수를 통해서 들어가는 위치가 정해지기때문)
+		//1. 차례대로 들어가지 않음 ->Hash의 특징 (내부적으로, 자바가 제공하는 Hash함수를 통해서 들어가는 위치가 정해지기때문)
 		//2. 중복허용x ->Set의 특징
-		
-		
-		//cf. Set(집합)은 중복데이터 허용하지 않는다. 그런 경우에는 equals와 hashCode
 		
 		for (Integer h : hset) {
 			System.out.print(h + ",");
@@ -26,9 +23,9 @@ public class HashSetTest {
 		HashSet<Person> accHset = new HashSet<>();
 		accHset.add(new Person("홍길동", 23));
 		accHset.add(new Person("홍길동", 60));
-		accHset.add(new Person("고길동", 33)); //1
-		accHset.add(new Person("고길동", 33)); //2
-		accHset.add(new Person("하길동", 90));
+		accHset.add(new Person("고길동", 11)); //1
+		accHset.add(new Person("고길동", 11)); //2
+		accHset.add(new Person("이길동", 90));
 		
 		//Set이 중복데이터를 걸러낼때 판단할 수 있는 '같은 객체'의 기준을 만들어주어야한다 (Set은 내부적으로 같은 객체인지 여부를 판별하는 데에 equals와 hashCode를 사용)
 		//ArrayListTest1.java에... cf. 0829/src/HashCodeTest.java
@@ -41,7 +38,6 @@ public class HashSetTest {
 		for (Person p : accHset) {
 			System.out.println(p);
 		}
-		
 		
 	}
 }

@@ -18,7 +18,8 @@ class Account {
 	}
 }
 
-class NameCompare implements Comparator<Account> { //비교기
+//커스텀비교기를 만드는것
+class NameCompare implements Comparator<Account> { 
 	@Override
 	public int compare(Account o1, Account o2) {
 		return o1.name.compareTo(o2.name);

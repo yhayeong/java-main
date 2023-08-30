@@ -79,8 +79,6 @@ public class Stack_Queue_VectorTest {
 	}
 	
 	
-	
-	
 	//Hash알고리즘은 검색에 유리하다
 	//ArrayList등은 Hash를 가지지 않는다. 
 	

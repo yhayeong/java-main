@@ -1,4 +1,4 @@
-package Ex11;
+package ex11;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,6 +66,9 @@ public class Ex11_8 {
 		 * 		이전에 동점자 였다면, 그 다음 등수는 동점자의 수를 고려해야한다. (실행결과 참고) 
 		 * 1.3 현재 총점과 등수를 이전총점(prevTotal)과 이전등수(prevRank)에 저장한다.
 		 */
+		
+		
+		
 	}
 
 	public static void main(String[] args) {

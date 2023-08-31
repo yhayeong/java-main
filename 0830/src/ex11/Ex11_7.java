@@ -1,4 +1,4 @@
-package Ex11;
+package ex11;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,7 +44,8 @@ class BanNoAscending implements Comparator<Studentt> {
 //		}
 //		return o1.ban - o2.ban; //앞이 더 크면 양수 앞이 더 작으면 음수 같으면 0
 		
-		return o1.ban==o2.ban? o1.no-o2.no: o1.ban-o2.ban;
+		return o1.ban==o2.ban? o1.no-o2.no: o1.ban-o2.ban; //삼항연산자로 축약: 반이 같으면 번호로 정렬, 그렇지않으면 반으로 정렬
+//		return o1.ban-o2.ban==0? o1.no-o2.no: o1.ban-o2.ban; //위와 같음
 	}
 }// BanNoAscending
 

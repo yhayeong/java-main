@@ -1,6 +1,12 @@
+package ex11;
+
+
 import java.util.HashMap;
 
-class Ex11_12 {
+//키는 카드1문자열 + 카드2문자열
+//벨류는 점수
+
+class Ex11_12 { 
 	public static void main(String args[]) throws Exception {
 		SutdaDeck deck = new SutdaDeck();
 		
@@ -37,6 +43,28 @@ class SutdaDeck {
 		 * 두 카드의 값을 문자열로 붙여서 key로, 점수를 value로 저장한다.
 		 */
 		jokbo.put("KK", 4000);
+		jokbo.put("1010", 3100);
+		jokbo.put("99", 3090);
+		jokbo.put("88", 3080);
+		jokbo.put("77", 3070);
+		jokbo.put("66", 3060);
+		jokbo.put("55", 3050);
+		jokbo.put("44", 3040);
+		jokbo.put("33", 3030);
+		jokbo.put("22", 3020);
+		jokbo.put("11", 3010);
+		jokbo.put("12", 2060);
+		jokbo.put("21", 2060);
+		jokbo.put("14", 2050);
+		jokbo.put("41", 2050);
+		jokbo.put("19", 2040);
+		jokbo.put("91", 2040);
+		jokbo.put("110", 2030);
+		jokbo.put("101", 2030);
+		jokbo.put("410", 2020);
+		jokbo.put("104", 2020);
+		jokbo.put("46", 2010);
+		jokbo.put("64", 2010);
 	}
 
 	int getPoint(Player p) {
@@ -46,10 +74,30 @@ class SutdaDeck {
 		SutdaCard c2 = p.c2;
 		Integer result = 0;
 		/*
-		 * (2) 아래의 로직에 맞게 코드를 작성하시오. 1. 카드 두 장이 모두 광이면, jokbo에서 키를 "KK"로 해서 점수를 조회한다. 2.
-		 * 두 카드의 숫자(num)로 jokbo에서 등급을 조회한다. 3. 해당하는 등급이 없으면, 아래의 공식으로 점수를 계산한다. (c1.num
-		 * + c2.num) % 10 + 1000 4. Player의 점수(point)에 계산한 값을 저장한다.
+		 * (2) 아래의 로직에 맞게 코드를 작성하시오. 
+		 * 1. 카드 두 장이 모두 광이면, jokbo에서 키를 "KK"로 해서 점수를 조회한다. 
+		 * 2. 두 카드의 숫자(num)로 jokbo에서 등급을 조회한다. 
+		 * 3. 해당하는 등급이 없으면, 아래의 공식으로 점수를 계산한다. (c1.num + c2.num) % 10 + 1000 
+		 * 4. Player의 점수(point)에 계산한 값을 저장한다.
 		 */
+		
+		//1
+		if(c1.isKwang && c2.isKwang) result = jokbo.get("KK");
+		
+		//2
+		else {
+			//3(1)
+			String key = ""+c1.num+c2.num;
+			if(jokbo.containsKey(key)) result = jokbo.get(key);
+			else result = (c1.num + c2.num) % 10 + 1000; 
+			
+			//3(2)
+//			if(result==null) result = (c1.num + c2.num) % 10 + 1000;
+//			result = jokbo.get(key); 
+		}
+		
+		//4
+		p.point = result; 
 		return result.intValue();
 	}
 
@@ -59,7 +107,7 @@ class SutdaDeck {
 			c = cards[pos];
 			cards[pos++] = null;
 		} else {
-			throw new Exception("남아있는    카드가   없습니다.");
+			throw new Exception("남아있는 카드가 없습니다.");
 		}
 		return c;
 	}

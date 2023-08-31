@@ -1,7 +1,6 @@
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 import acc.Account; //Bank와 다른 패키지에 있는 Account클래스 사용
 import acc.SpecialAccount_Teacher;
@@ -10,7 +9,8 @@ import exception.BankException;
 
 public class Bank {
 	
-	Map<String, Account> accs = new HashMap<>();
+//	Map<String, Account> accs = new HashMap<>();
+	Map<String, Account> accs = new TreeMap<>(); //Tree->정렬되면서 저장됨
 	
 	Scanner sc = new Scanner(System.in);
 	
@@ -80,7 +80,7 @@ public class Bank {
 	}
 	
 	
-//*** searchAccById메소드가 필요없으므로 삭제 (HashMap의 containsKey메소드를 사용)
+//*** searchAccById메소드가 필요없으므로 삭제 (HashMap의 containsKey메소드를 사용하면 되므로)
 	
 	
 	void deposit() throws BankException {
@@ -123,20 +123,22 @@ public class Bank {
 		System.out.println("개설계좌수: " + accs.size());
 		
 		//@@@
-//		for (int i = 0; i < accs.values().size(); i++) {
-//			System.out.println(accs.values().get(id));
-//		}
-//		for(Account acc : accs.values()) { //향상 for문
+//		for (int i = 0; i < accs.size(); i++) {
+//			Account acc = (Account) accs.values();
 //			System.out.println(acc);
+////			System.out.println(accs.values().get(id));
+//			
 //		}
 		
-		//반복자(이터레이터) 이용하여 출력하기
-		Iterator<Account> iter = accs.values().iterator(); //accs.values()의 결과인 벨류가 Account 인스턴스 하나이므로
-		while(iter.hasNext()) {
-			System.out.println(iter.next());
+		for(Account acc : accs.values()) { //향상 for문
+			System.out.println(acc);
 		}
 		
-		//결론: 간단히 조회출력할때는 향상for문, 반복문 안에서 삭제 등을 수행하는 경우에는 이터레이터를 사용하는것이 좋다
+		//반복자(이터레이터) 이용하여 출력하기
+//		Iterator<Account> iter = accs.values().iterator(); //accs.values()의 결과인 벨류가 Account 인스턴스 하나이므로
+//		while(iter.hasNext()) {
+//			System.out.println(iter.next());
+//		}
 	}
 	
 	

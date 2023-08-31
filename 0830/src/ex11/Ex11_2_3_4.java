@@ -1,4 +1,4 @@
-package Ex11;
+package ex11;
 
 import java.util.ArrayList;
 import java.util.HashSet;

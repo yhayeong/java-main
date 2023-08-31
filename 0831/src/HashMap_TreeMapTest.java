@@ -1,7 +1,8 @@
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class HashMapTest {
+public class HashMap_TreeMapTest {
 	public static void main(String[] args) {
 		/*
 		Map에는 TreeMap, HashMap, HashTable, Properties가 있음
@@ -81,3 +82,22 @@ public class HashMapTest {
 	}//main
 	
 }
+
+
+
+
+
+
+/*
+ < TreeMap >
+ 
+Tree->정렬되며 저장됨 (검색에 유리)
+주로 HashMap을 사용하고 정렬조회가 필요한 경우가 빈번한 경우에 TreeMap을 쓴다
+
+생성자 : TreeMap(), TreeMap(비교기)
+
+메소드 SortedMap headMap(Object toKey) :  특정요소미포함까지 범위의 SortedMap을 리턴
+메소드 SortedMap subMapObject(fromKey, Object toKey), SortedMap tailMap(Object fromKey)
+cf. Set의 subSet메소드
+
+*/

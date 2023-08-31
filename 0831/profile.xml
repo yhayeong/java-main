@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>profileeee</comment>
+<entry key="name">hong gil dong</entry>
+<entry key="weight">77</entry>
+<entry key="age">30</entry>
+<entry key="height">178.5</entry>
+</properties>

@@ -22,6 +22,7 @@ public class Ex11_1 {
 		 */
 		//문제의 포인트 : ArrayList는 중복허용됨을 주의
 		
+		//교: list1의 요소를 저장하고 "그중에서 list2와 일치하는 요소만 남기고 삭제"
 		kyo.addAll(list1);
 		kyo.retainAll(list2);
 		
@@ -29,12 +30,13 @@ public class Ex11_1 {
 		cha.addAll(list1);
 		cha.removeAll(list2);
 		
+		//합: list1의 list2에 대한 차 + list2
 		hap.addAll(cha);
 		hap.addAll(list2);
 		
-		//차 없이 합 구하기
+		//합: list1 -list2 +list2
 //		hap.addAll(list1);
-//		hap.removeAll(kyo); //중복하여 들어간 요소를 제거 (이 문장을 밑으로 내리면 두번씩 들어간 요소를 하나씩 남기지 않고 해당되면 다 지움)
+//		hap.removeAll(list2);
 //		hap.addAll(list2);
 		
 		

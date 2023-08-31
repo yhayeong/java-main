@@ -122,12 +122,10 @@ public class Bank {
 		System.out.println("[전체 계좌 조회]");
 		System.out.println("개설계좌수: " + accs.size());
 		
-		//@@@
+		//HashMap, TreeMap에 저장된 것들은 인덱스가 없고, 벨류를 하나씩 읽기 위해서는 꼭 get(키)를 써야하므로 일반for문 사용불가
 //		for (int i = 0; i < accs.size(); i++) {
 //			Account acc = (Account) accs.values();
 //			System.out.println(acc);
-////			System.out.println(accs.values().get(id));
-//			
 //		}
 		
 		for(Account acc : accs.values()) { //향상 for문

@@ -1,3 +1,8 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -8,8 +13,29 @@ import exception.BankError;
 import exception.BankException;
 
 public class Bank {
+	/* 
+	 <스트림 추가>
+	 count를 맨앞에 저장한다
+	 일반계좌일때 n 특수계좌일때 s를 구분자로 각 Account앞에 붙인다
+	 
+	 예를들어
+	 10001  hong  만원 
+	 10002  park  이만원  V
+	 10003  song  삼만원  
+	 라면
+	 3 N10001hong10000 S10002park20000V N10003song30000 (가독성을 위해 띄어쓰기했을뿐)
+		
+	 또한
+	 저장시점은 0번으로 정상종료될때 저장되도록할것
+	 읽기시점은 사용자입장에서 프로그램시작되자마자 읽어서 TreeMap에 들어가는것이 적절하다
+	 
+	 read모드일때 파일이 없으면 예외발생하고 write모드면 예외발생하지않음
+	 그러므로 read모드에서 파일이 없는 경우에 대한 예외처리가 필요
+	 Bank에서 Read, Write하는것이 적절할것 (Account에서 하는것보다)
+	*/
 	
-//	Map<String, Account> accs = new HashMap<>();
+	
+	
 	Map<String, Account> accs = new TreeMap<>(); //Tree->정렬되면서 저장됨
 	
 	Scanner sc = new Scanner(System.in);
@@ -80,7 +106,7 @@ public class Bank {
 	}
 	
 	
-//*** searchAccById메소드가 필요없으므로 삭제 (HashMap의 containsKey메소드를 사용하면 되므로)
+//*** searchAccById메소드가 필요없으므로 삭제 (Map의 containsKey메소드를 사용하면 되므로)
 	
 	
 	void deposit() throws BankException {
@@ -140,16 +166,109 @@ public class Bank {
 	}
 	
 	
+	//<1. 파일에 데이터 저장하기>
+	public void store_b() { // b:바이너리
+		DataOutputStream dao = null;
+		
+		try {
+			dao = new DataOutputStream(new FileOutputStream("accs.bin")); //스트림꽂기(이제 데이터 저장(쓰기) 가능)
+
+			dao.writeInt(accs.size()); //count를 맨앞에 저장(쓰기)
+			
+			for (Account acc : accs.values()) {
+				//일반계좌는n 특별계좌는s로 구분값 넣어서 저장
+				if(acc instanceof SpecialAccount_Teacher) dao.writeChar('S');
+				else dao.writeChar('N');
+				
+				dao.writeUTF(acc.getId());
+				dao.writeUTF(acc.getName());
+				dao.writeInt(acc.getBalance());
+				if(acc instanceof SpecialAccount_Teacher) {
+					SpecialAccount_Teacher sacc = (SpecialAccount_Teacher) acc;
+					dao.writeUTF(sacc.getGrade().charAt(0)+"");
+					
+//					dao.writeUTF(((SpecialAccount_Teacher)acc).getGrade().charAt(0)+""); //특별계좌일때만 등급을 저장
+					//특별계좌면 다운캐스팅해서 등급에 접근해서 넣는다 (특별계좌 아니라면 if문 안들어옴)
+				}
+			}//for문
+			
+		} catch (IOException e) {
+			System.out.println("----파일 예외발생");
+			e.printStackTrace();
+		} finally {
+			try {
+				if(dao!=null) dao.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
+	
+	
+	//<2. 파일 읽어오기> 
+	public void load_b() {
+		DataInputStream dis = null;
+		try {
+			dis = new DataInputStream(new FileInputStream("accs.bin"));
+			
+			int count = dis.readInt(); //저장수
+			for (int i = 0; i < count; i++) {
+				char sect = dis.readChar(); //특별계좌인지일반계좌인지를 구분하는 구분자
+				String id = dis.readUTF();
+				String name = dis.readUTF();
+				int balance = dis.readInt();
+
+				if(sect=='S') {
+					String grade = dis.readUTF();
+					accs.put(id,  new SpecialAccount_Teacher(id,name,balance,grade));
+				}
+				else {
+					accs.put(id,  new Account(id,name,balance));
+				}
+			}//for문
+			
+		} catch (IOException e) {
+			System.out.println("-------accs.bin이 생성되어있지 않음");
+			e.printStackTrace();
+			
+			/*
+			 프로그램 시작시에에 읽을 대상인 accs.bin이 없는 경우에 발생하는 에러는 정상적
+			 
+			 read시에 에러났던 다른 이유:
+			 write할때 writeInt로 한것을 read할때 readInt로 하지 않는것과 같은 실수 때문
+			*/
+			
+		} finally {
+			try {
+				if(dis!=null) dis.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 	
 	public static void main(String[] args) { 
 	
 		Bank bank = new Bank();
+		
+		bank.load_b();
+		//2-2. 파일 읽기 메소드 호출시점: 반복문 안에 있으면 안되고 프로그램 실행하자마자 딱 한번 호출돼야할것
+		//파일쓰기메소드store는 프로그램을 나갈때 딱 한번만 저장하고, 파일읽기메소드load는 다른 메뉴로 갈때 파일을 다시 불러오면 안되는 점을 주의
+		
 		int sel;
 		
 		while(true) {
 			try {
 				sel = bank.menu();
-				if(sel==0) break;
+				if(sel==0) {
+					//1-2. 프로그램이 정상종료되는 시점에 파일에 데이터를 저장한다
+					bank.store_b();
+					break;
+				}
 				switch(sel) {
 				case 1: bank.selAccMenu(); break; 
 				case 2: bank.deposit(); break;		

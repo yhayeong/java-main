@@ -15,7 +15,7 @@ public class FileStreamTest {
 		 스트림을 나누는 기준
 		 1. 입력용 vs 출력용 
 		 2. 문자Char vs 바이트 단위
-		 3. 1차 vs 2차(보조스트림)
+		 3. 1차(기반스트림) vs 2차(보조스트림)
 		
  		바이트기반 스트림 - InputStream, OutputStream (Stream 용어 사용하는것은 바이트기반임)
 		문자기반 스트림 - Reader, Writer
@@ -40,7 +40,7 @@ public class FileStreamTest {
 		
 		 */
 		
-		FileInputStream fis = null;
+		FileInputStream fis = null; //try블럭 밖에서 선언하는 이유는 finally블럭에서도 사용하기 위해서임
 		FileOutputStream fos = null;
 		BufferedInputStream bis = null;
 		BufferedOutputStream bos = null;

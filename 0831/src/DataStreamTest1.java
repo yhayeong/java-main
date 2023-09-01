@@ -24,6 +24,12 @@ class Person {
 }
 
 public class DataStreamTest1 {
+	
+	/*
+	 프로그램 안의 데이터는 타입이 다 다를것...
+	 언제나 전체를 읽어서 전체 그대로를 output하는것이 아닐것이므로 바이트단위로 저장하고 읽는것이 너무 힘들기 때문에
+	 변수 타입에 맞게 저장하고 읽을 수 있는 보조스트림인 DataStream을 많이 사용한다
+	*/
 
 	static void write(Person p) {
 		
@@ -93,7 +99,7 @@ public class DataStreamTest1 {
 			
 			
 			dos.writeInt(pers.size()); //맨 앞에 List에 있는 인원수를 저장한다 (출력read할때 사용하기 위해)
-									//(저장할때는 몇개가 저장되어야하는지 알지만 read할때는 몇개를 읽어야하는지 알수없으므로)
+									//(저장할때는 몇개가 저장되어야하는지 알지만 읽는입장에서 read할때는 몇개를 읽어야하는지 알수없으므로)
 			for(Person p: pers) {
 				dos.writeUTF(p.name);
 				dos.writeInt(p.age);

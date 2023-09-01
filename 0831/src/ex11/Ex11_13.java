@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.TreeMap;
 
-public class Ex13 {
+public class Ex11_13 {
 	public static void main(String[] args) throws Exception {
 		SutdaDeck deck = new SutdaDeck();
 

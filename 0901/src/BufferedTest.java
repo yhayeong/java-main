@@ -3,6 +3,8 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 class Person {
 	String name;
@@ -54,7 +56,7 @@ class Person {
 
 public class BufferedTest {
 	
-	//<1> 파일 쓰기
+	//<1> Person 하나를 저장
 	static void write(Person p) {
 		FileWriter fw = null;
 		BufferedWriter bw = null;
@@ -79,6 +81,34 @@ public class BufferedTest {
 			}
 		}
 	}//write메소드
+	
+	//<2> Person의 List를 저장
+	static void write(List<Person> pers) {
+		BufferedWriter bw = null;
+		
+		try {
+			bw = new BufferedWriter(new FileWriter("pers.txt"));
+			
+			for(Person p : pers) {
+				String perStr = p.getName()+","+p.getAge()+","+p.getHeight()+",";
+				perStr += p.isMarried()? "Y" : "N";
+				
+				bw.write(perStr);
+				bw.newLine(); 
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(bw!=null) bw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}//write메소드
+	
+	
 	
 	static Person read() {
 		Person per = null;
@@ -110,8 +140,38 @@ public class BufferedTest {
 		}
 		return per;
 	}
-
 	
+	
+	static List<Person> readList() {
+		List<Person> pers = new ArrayList<>();
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader("pers.txt"));
+			
+			String perStr = null;
+			while((perStr=br.readLine())!=null) { //더 읽을게 없으면 null을 반환하므로 조건식은 '읽을것이 있는동안'을 뜻함
+				String[] perProp = perStr.split(",");
+				String name = perProp[0];
+				int age = Integer.parseInt(perProp[1]);
+				double height = Double.parseDouble(perProp[2]);
+//				boolean married = perProp[3].charAt(0)=='Y'? true: false;
+				boolean married = perProp[3].equals("Y")? true: false;
+				pers.add(new Person(name, age, height, married));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(br!=null) br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return pers;
+	}
+	
+	
+
 	
 	public static void main(String[] args) {
 		/*
@@ -126,13 +186,40 @@ public class BufferedTest {
 		 
 		 * */
 		
-		Person p1 = new Person("hong", 30, 178.5, false);
-		Person p2 = new Person("song", 25, 173.5, true);
-		Person p3 = new Person("gong", 35, 158.2, false);
+		//<1> Person하나를 저장 - 실행시 per.txt생성됨
+//		Person p = new Person("hong", 30, 178.5, false);
+//		write(p);
+
 		
-		write(p1);
-		write(p2);
-		write(p3);
+		//<2> 배열을 저장 - 실행시 pers.txt생성됨
+//		List<Person> pers = new ArrayList<>();
+//		pers.add(new Person("song", 15, 185.3, false));
+//		pers.add(new Person("pong", 45, 165.1, true));
+//		pers.add(new Person("kong", 55, 155.8, false));
+//		
+//		write(pers);
+		
+		
+		
+		//cf. 쓰기와 읽기는 동시에 하지 않는다 - 둘 중 하나는 주석처리하고 실행할것
+		
+		
+		//<3>(1) 하나짜리인 per.txt 읽기
+//		Person p = read();
+//		System.out.println(p);
+		
+		
+		//<3>(2) 리스트인 pers.txt 읽기
+		List<Person> list = readList();
+		for(Person p : list) {
+			System.out.println(p);
+		}
+		
+		/* 출력결과:
+		이름:song, 나이:15, 키:185.300000, 결혼여부:N
+		이름:pong, 나이:45, 키:165.100000, 결혼여부:Y
+		이름:kong, 나이:55, 키:155.800000, 결혼여부:N 
+		 * */
 		
 		
 		

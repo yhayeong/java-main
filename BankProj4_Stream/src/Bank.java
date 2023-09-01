@@ -1,10 +1,15 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 import acc.Account; //Bank와 다른 패키지에 있는 Account클래스 사용
@@ -202,9 +207,7 @@ public class Bank {
 				e.printStackTrace();
 			}
 		}
-		
-		
-	}
+	}//store_b메소드
 	
 	
 	
@@ -248,16 +251,99 @@ public class Bank {
 				e.printStackTrace();
 			}
 		}
+	}//load_b메소드
+	
+	
+	//<3. BufferedWriter, BufferedReader이용하기> (t는 text의미)
+	public void store_t() {
+		BufferedWriter bw = null;
+		try {
+			bw = new BufferedWriter(new FileWriter("accs.txt"));
+
+			//트리맵에 벨류들만 저장하기
+			for (Account acc : accs.values()) {
+				String accStr = acc.getId();
+				accStr += ","+acc.getName();
+				accStr += ","+acc.getBalance();
+				if(acc instanceof SpecialAccount_Teacher) {
+					accStr += ","+((SpecialAccount_Teacher) acc).getGrade().charAt(0)+"";
+				}
+				bw.write(accStr);
+				bw.newLine();
+
+				//cf. 이렇게 저장한 것을 읽을때는 split(",")했을때 배열사이즈가 3이면 일반계좌, 4이면 특별계좌임
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(bw!=null) bw.close();
+			} catch (IOException e) {
+				e.printStackTrace(); 
+			}
+		}
+	}//store_t메소드
+	
+	public void load_t() {
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader("accs.txt"));
+
+			String accStr = null;
+			while((accStr=br.readLine())!=null) { //더 읽을게 없으면 null을 반환하므로 조건식은 '읽을것이 있는동안'을 뜻함
+				
+//				/* <4. StringTokenizer 사용하여 자르기>-----------------------------------
+				StringTokenizer st = new StringTokenizer(accStr,",");
+				String id = st.nextToken();
+				String name = st.nextToken();
+				int balance = Integer.parseInt(st.nextToken());
+				if(st.countTokens()!=0) {
+					String grade = st.nextToken();
+					accs.put(id, new SpecialAccount_Teacher(id, name, balance, grade));
+				} else {
+					accs.put(id, new Account(id, name, balance));
+				}
+//				-----------------------------------------------------------------------*/
+				
+				/*
+				String[] accProp = accStr.split(",");
+				String id = accProp[0];
+				String name = accProp[1];
+				int balance = Integer.parseInt(accProp[2]);
+				if(accProp.length==4) {
+					String grade = accProp[3];
+					accs.put(id, new SpecialAccount_Teacher(id,name,balance,grade));
+				} else {
+					accs.put(id, new Account(id,name,balance));
+				}
+				*/ 
+				
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(br!=null) br.close();
+			} catch (IOException e) {
+				e.printStackTrace(); 
+			}
+		}
 		
-	}
+	}//load_t메소드
+	
 	
 	public static void main(String[] args) { 
 	
 		Bank bank = new Bank();
 		
-		bank.load_b();
+//		bank.load_b();
 		//2-2. 파일 읽기 메소드 호출시점: 반복문 안에 있으면 안되고 프로그램 실행하자마자 딱 한번 호출돼야할것
 		//파일쓰기메소드store는 프로그램을 나갈때 딱 한번만 저장하고, 파일읽기메소드load는 다른 메뉴로 갈때 파일을 다시 불러오면 안되는 점을 주의
+		
+		//3.
+		bank.load_t();
+		
 		
 		int sel;
 		
@@ -266,7 +352,9 @@ public class Bank {
 				sel = bank.menu();
 				if(sel==0) {
 					//1-2. 프로그램이 정상종료되는 시점에 파일에 데이터를 저장한다
-					bank.store_b();
+//					bank.store_b();
+					//3.
+					bank.store_t();
 					break;
 				}
 				switch(sel) {

@@ -37,6 +37,7 @@ public class FileStreamTest {
 		직렬화 : 저장, 전송, 공유가 쉽도록 데이터를 특정 형식으로 변환  JSON.stringify() 
 		역직렬화 : 직렬화된 데이터를 (사용을 위해) 원래대로 복원  JSON.parse() 
 		
+		Serializable을 상속한 클래스는 Object로(통으로 한번에) 저장하고 읽을수있다는것(ObjectStreamTest.java 참고)
 		
 		 */
 		

@@ -13,6 +13,7 @@ public class FileTest2 {
 //		}
 		
 		
+		
 		//(2) 파일객체로 생성해서 가져온다
 		File[] files = f.listFiles();
 		

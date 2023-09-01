@@ -3,10 +3,11 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-class Person {
+class Person implements Serializable {
 	String name;
 	int age;
 	double height;

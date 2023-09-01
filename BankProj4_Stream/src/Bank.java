@@ -287,7 +287,8 @@ public class Bank {
 	public void load_t() {
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader("accs.txt"));
+//			br = new BufferedReader(new FileReader("accs.txt"));
+			br = new BufferedReader(new FileReader("c:\\test\\accs.txt"));
 
 			String accStr = null;
 			while((accStr=br.readLine())!=null) { //더 읽을게 없으면 null을 반환하므로 조건식은 '읽을것이 있는동안'을 뜻함

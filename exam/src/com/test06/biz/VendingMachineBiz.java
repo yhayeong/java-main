@@ -7,51 +7,95 @@ import com.test06.entity.Juice;
 
 public class VendingMachineBiz implements IVendingMachineBiz {
 
-	private int balance = 50; //현재 잔액
+	private int balance = 1000; //현재 잔액
 	private Drink[] cartList = new Drink[3]; //구입목록 배열
 	private int count = 0; //배열개수
 	
+	public int getBalance() {
+		return balance;
+	}
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+	public Drink[] getCartList() {
+		return cartList;
+	}
+	public void setCartList(Drink[] cartList) {
+		this.cartList = cartList;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	
 	
 	
-	
+	//메뉴 입력 => 2
 	@Override
-	public void cartDrink(Drink drink) throws Exception {
-		/*
-		 1) 현재 잔액을 출력한다. ( Sample Run 참조 )
-2) 매개변수로 넘겨받은 Drink 타입에 대한 메시지를 출력한다. (실행결과 참조) 
-메시지 출력시 Drink 타입의 toString() 메소드를 사용한다.
-3) 잔액과 구매가격을 비교하여 부족한 경우에 에러 메시지를 출력한다.
-4) 현재 갖고 있는 잔액에서 구매가격만큼 뺀다.
-5) 배열에 저장된 개수와 배열의 크기가 같으면, 기존의 배열보다 사이즈가 
-3배인 배열을 생성한 후, 기존의 배열 내용을 새로운 배열에 복사하고 
-새로운 배열과 기존 배열을 바꾼다.
-6) 배열에 구매한 개수만큼 저장하고 count값을 증가시킨다. 
-		 * */
+	public void cartDrink(Drink drink) {
 		String drinkName = "";
-		if(drink instanceof Juice) drinkName+="주스";
+		if(drink instanceof Juice) drinkName+="쥬스";
 		else if(drink instanceof Coffee) drinkName+="커피";
 		else if(drink instanceof Coke) drinkName+="코크";
-		System.out.println(drinkName + "을/를 구입했습니다.");
-		System.out.println("현재 잔액: " + balance + " 원");
 		
 		if(balance<drink.getPrice()) {
-			if(drink instanceof Juice) throw new VendingMachineException(VmError.JUICE);
-			else if(drink instanceof Coffee) throw new VendingMachineException(VmError.COFFEE);
-			else if(drink instanceof Coke) throw new VendingMachineException(VmError.COKE);
+			if(drink instanceof Juice) System.out.println("잔액이 부족하여 " + drinkName + " 구매 불가능합니다.");
+			else if(drink instanceof Coffee) System.out.println("잔액이 부족하여 " + drinkName + " 구매 불가능합니다.");
+			else if(drink instanceof Coke) System.out.println("잔액이 부족하여 " + drinkName + " 구매 불가능합니다.");
+			
+		} else {
+			setBalance(balance-drink.getPrice());
+			System.out.print(drinkName + "를 구입했습니다.");
+			System.out.println(" 현재 잔액: " + balance + " 원" + "\n");
+			
+			//구입목록 배열에 저장
+			if(cartList.length == count) {
+				Drink[] tmpCartList = new Drink[cartList.length * 3];
+				System.arraycopy(cartList, 0, tmpCartList, 0, count);
+				cartList = tmpCartList;
+			}
+			cartList[count++] = drink;
 		}
-		
-		
 	}
 
+	
+	//메뉴 입력 => 5
 	@Override
 	public void printCart() {
+		int juiceCnt = 0;
+		int coffeeCnt = 0;
+		int cokeCnt = 0;
+		int totalPay = 0;
+
+		for (Drink drink : cartList) {
+			if(drink instanceof Juice) {
+				juiceCnt++;
+				totalPay += drink.getPrice();
+			} else if(drink instanceof Coffee) {
+				coffeeCnt++;
+				totalPay += drink.getPrice();
+			} else if(drink instanceof Coke) {
+				cokeCnt++;
+				totalPay += drink.getPrice();
+			}
+		}
+
+		System.out.println("=====음료수 구입 목록=====");
+		System.out.println("쥬스 : " + juiceCnt + " 개");
+		System.out.println("커피 : " + coffeeCnt + " 개");
+		System.out.println("코크 : " + cokeCnt + " 개");
+		System.out.println("=======================");
+		System.out.println("사용 금액: " + totalPay);
+		System.out.println("남은 금액: " + balance + "\n");
 		
 	}
 	
 	
 	
 
+	//메뉴 입력 => 1
 	@Override
 	public void printDrinkList(Drink[] drinkList) {
 		System.out.println("================");
@@ -61,7 +105,7 @@ public class VendingMachineBiz implements IVendingMachineBiz {
 			System.out.println(d);
 		}
 		System.out.println("----------");
-		System.out.println("현재 잔액: " + balance);
+		System.out.println("현재 잔액: " + balance + "\n");
 	}
 	
 }

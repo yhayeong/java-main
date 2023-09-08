@@ -26,7 +26,7 @@ public class Bank { //MVC에서 사용자인터페이스(Main) 및 서비스를 
 		int sel = Integer.parseInt(sc.nextLine());
 		if(!(sel>=0 && sel<=5)) throw new BankException("메뉴오류", BankError.MENU);
 		return sel;
-	}//menu()메소드
+	}
 	
 	
 	void selAccMenu() throws BankException { 
@@ -41,7 +41,7 @@ public class Bank { //MVC에서 사용자인터페이스(Main) 및 서비스를 
 		case 2: makeSpecialAccount(); break; 
 		default: throw new BankException("메뉴오류", BankError.MENU);  
 		}
-	}//selAccMenu()
+	}
 	
 	
 	void makeAccount() throws BankException {
@@ -55,7 +55,7 @@ public class Bank { //MVC에서 사용자인터페이스(Main) 및 서비스를 
 		Account acc = AccountDAO.selectAccount(conn, id);
 		if(acc!=null) {
 			AccountDAO.close(conn);
-			throw new BankException("계좌오류", BankError.NOID);
+			throw new BankException("중복계좌", BankError.EXISTID);
 		}
 		
 		System.out.print("이름 : ");
@@ -79,7 +79,7 @@ public class Bank { //MVC에서 사용자인터페이스(Main) 및 서비스를 
 		Account acc = AccountDAO.selectAccount(conn, id);
 		if(acc!=null) {
 			AccountDAO.close(conn);
-			throw new BankException("계좌오류", BankError.NOID);
+			throw new BankException("중복계좌", BankError.EXISTID);
 		}
 		
 		System.out.print("이름 : ");
@@ -93,35 +93,73 @@ public class Bank { //MVC에서 사용자인터페이스(Main) 및 서비스를 
 		AccountDAO.close(conn);
 	}
 	
-
 	
 	
 	void deposit() throws BankException {
+		
+		Connection conn = AccountDAO.getConnection();
+		
 		System.out.println("[입금]");
 		System.out.print("계좌번호 : ");
 		String id = sc.nextLine();
 		
+		Account acc = AccountDAO.selectAccount(conn, id);
+		if(acc==null) {
+			AccountDAO.close(conn);
+			throw new BankException("계좌오류", BankError.NOID);
+		}
 		
 		System.out.print("입금액 : ");
 		int money = Integer.parseInt(sc.nextLine());
+
+		acc.deposit(money);
 		
+		AccountDAO.updateAccount(conn, acc);
+		AccountDAO.close(conn);
 	}
 	
 	void withdraw() throws BankException {
+		
+		Connection conn = AccountDAO.getConnection();
+		
+		System.out.println("[출금]");
 		System.out.print("계좌번호 : ");
 		String id = sc.nextLine();
 		
+		Account acc = AccountDAO.selectAccount(conn, id);
+		if(acc==null) {
+			AccountDAO.close(conn);
+			throw new BankException("계좌오류", BankError.NOID);
+		}
 		
 		System.out.print("출금액 : ");
 		int money = Integer.parseInt(sc.nextLine());
 		
+		acc.withdraw(money); // 잔액부족 예외 발생시 throws하여 메인에 예외처리가 위임된다(메인에서 try-catch로 예외처리하고있음)
+		
+		AccountDAO.updateAccount(conn, acc);
+		AccountDAO.close(conn);
 	}
 	
+	
 	void accountInfo() throws BankException {
+		
+		Connection conn = AccountDAO.getConnection();
+		
+		System.out.println("[계좌조회]");
 		System.out.print("계좌번호 : ");
 		String id = sc.nextLine();
 		
+		Account acc = AccountDAO.selectAccount(conn, id);
+		if(acc==null) {
+			AccountDAO.close(conn);
+			throw new BankException("계좌오류", BankError.NOID);
+		}
+		
+		System.out.println(acc);
+		AccountDAO.close(conn);
 	}
+	
 	
 	void allAccountInfo() {
 		

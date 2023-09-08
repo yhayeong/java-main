@@ -57,7 +57,7 @@ public class Dao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql); // 미완성 쿼리문을 가지고 미완성(가변) 실행 객체 생성
-			pstmt.setString(1, id); // cf. 물음표의 인덱스는 0이 아닌 1부터 시작함(DB관련인덱스넘버는 1부터시작) 
+			pstmt.setString(1, id); // cf. 물음표의 인덱스는 0이 아닌 1부터 시작함(DB관련인덱스넘버는 1부터시작하고 유일한 예외는 limit) 
 			rs = pstmt.executeQuery();
 			
 			if(rs!=null && rs.next()) {
@@ -158,8 +158,8 @@ public class Dao {
 	
 	
 	
-	// 업데이트 (서비스의 메소드에서 balance를 갱신해둔 acc를 들고옴)
-	// *** 서비스의 입금과 출금 메소드 모두 이 메소드를 호출하여 DB의 데이터를 업데이트한다
+	// 업데이트 (서비스의 메소드에서 이미 잔액이 갱신된 acc를 인자로 전달받음)
+	// *** 서비스의 입금과 출금 메소드 모두 이 메소드를 호출하여 DB에 update 질의를 수행
 	public static int updateAccount(Connection conn, Account acc) {
 		PreparedStatement pstmt = null;
 		String sql = "UPDATE ACCOUNT SET BALANCE=? WHERE ID=?";
@@ -167,7 +167,7 @@ public class Dao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, acc.getBalance());
+			pstmt.setInt(1, acc.getBalance()); // 인덱스넘버는 미완성쿼리문의 물음표 순서를 의미
 			pstmt.setString(2, acc.getId());
 			
 			cnt = pstmt.executeUpdate();

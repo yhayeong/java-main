@@ -45,7 +45,6 @@ public class AccountDAO {
 	
 	
 	
-	
 	// 셀렉트
 	public static Account selectAccount(Connection conn, String id) {
 		
@@ -126,7 +125,30 @@ public class AccountDAO {
 	}
 	
 	
-	
+	// 업데이트 (Bank에서 이미 잔액이 갱신된 acc를 인자로 전달받음)
+	public static int updateAccount(Connection conn, Account acc) {
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE ACCOUNT SET BALANCE=? WHERE ID=?";
+		int cnt = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, acc.getBalance());
+			pstmt.setString(2, acc.getId());
+			
+			cnt = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return cnt;
+	}
 	
 	
 	

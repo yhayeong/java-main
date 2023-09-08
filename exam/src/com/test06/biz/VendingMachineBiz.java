@@ -16,39 +16,23 @@ public class VendingMachineBiz implements IVendingMachineBiz {
 	}
 	public void setBalance(int balance) {
 		this.balance = balance;
-	}
-	public Drink[] getCartList() {
-		return cartList;
-	}
-	public void setCartList(Drink[] cartList) {
-		this.cartList = cartList;
-	}
-	public int getCount() {
-		return count;
-	}
-	public void setCount(int count) {
-		this.count = count;
-	}
+	}	
 	
 	
-	
-	//메뉴 입력 => 2
+	//메뉴 입력 => 2,3,4
 	@Override
 	public void cartDrink(Drink drink) {
 		String drinkName = "";
-		if(drink instanceof Juice) drinkName+="쥬스";
-		else if(drink instanceof Coffee) drinkName+="커피";
-		else if(drink instanceof Coke) drinkName+="코크";
+		if(drink instanceof Juice) drinkName = "쥬스";
+		else if(drink instanceof Coffee) drinkName = "커피";
+		else if(drink instanceof Coke) drinkName = "코크";
 		
 		if(balance<drink.getPrice()) {
-			if(drink instanceof Juice) System.out.println("잔액이 부족하여 " + drinkName + " 구매 불가능합니다.");
-			else if(drink instanceof Coffee) System.out.println("잔액이 부족하여 " + drinkName + " 구매 불가능합니다.");
-			else if(drink instanceof Coke) System.out.println("잔액이 부족하여 " + drinkName + " 구매 불가능합니다.");
-			
+			System.out.println("잔액이 부족하여 " + drinkName + " 구매 불가능합니다.");
 		} else {
 			setBalance(balance-drink.getPrice());
 			System.out.print(drinkName + "를 구입했습니다.");
-			System.out.println(" 현재 잔액: " + balance + " 원" + "\n");
+			System.out.println(" 현재 잔액: " + balance + " 원\n");
 			
 			//구입목록 배열에 저장
 			if(cartList.length == count) {
@@ -101,9 +85,7 @@ public class VendingMachineBiz implements IVendingMachineBiz {
 		System.out.println("================");
 		System.out.println("음료수명\t가격");
 		System.out.println("================");
-		for (Drink d : drinkList) {
-			System.out.println(d);
-		}
+		for (Drink d : drinkList) System.out.println(d);
 		System.out.println("----------");
 		System.out.println("현재 잔액: " + balance + "\n");
 	}

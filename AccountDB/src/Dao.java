@@ -3,11 +3,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Dao {
 	
-	// 연결 객체 생성
+	// 연결 객체 생성하는 메소드
 	public static Connection getConnection() {
 		Connection conn = null;
 		try {
@@ -32,7 +35,7 @@ public class Dao {
 	}//getConnection
 	
 	
-	// 연결 객체 닫기
+	// 연결 객체 닫는 메소드
 	public static void close(Connection conn) {
 		try {
 			if(conn!=null) conn.close();
@@ -48,11 +51,8 @@ public class Dao {
 	public static Account selectAccount(Connection conn, String id) {
 		
 		Account acc = null;
-		
 		String sql = "SELECT * FROM ACCOUNT WHERE ID=?";
-		
 		PreparedStatement pstmt = null; // 미완성(가변) 실행 객체
-		
 		ResultSet rs = null;
 		
 		try {
@@ -71,10 +71,61 @@ public class Dao {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} catch (Exception e) {
+				
+			}
 		}
 		
 		return acc; // if(rs!=null && rs.next())에 들어오면 데이터를 이용하여 acc를 생성하여 반환하고 조건문에 안걸리면 null을 반환
 	}//selectAccount
+	
+	
+	
+	
+	// 셀렉트
+	public static List<Account> selectAccountList(Connection conn) {
+		List<Account> accList = new ArrayList<>();
+		
+		Statement stmt = null;
+		String sql = "SELECT * FROM ACCOUNT";
+		ResultSet rs = null;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			if(rs!=null) {
+				while(rs.next()) {
+					String id = rs.getString(1);
+					String name = rs.getString(2);
+					Integer balance = rs.getInt(3);
+					String grade = rs.getString(4);
+					accList.add(new Account(id, name, balance, grade));
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return accList;
+	}
+	
 	
 	
 	// 인서트
@@ -88,12 +139,10 @@ public class Dao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, acc.getId());
 			pstmt.setString(2, acc.getName());
-			pstmt.setInt(3, acc.getBalace());
+			pstmt.setInt(3, acc.getBalance());
 			pstmt.setString(4, acc.getGrade());
 			// 미완성쿼리문을 완성시킨다
-			
-			cnt = pstmt.executeUpdate(); //쿼리문을 실행하여 결과행의 수를 반환받는다
-			
+			cnt = pstmt.executeUpdate(); //완성된 쿼리문을 실행하여 결과행의 수를 반환받는다
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,8 +160,8 @@ public class Dao {
 	
 	
 	
-	// 업데이트 (서비스의 메소드에서 balance를 갱신시킨 acc를 들고옴)
-	// *** 입금과 출금 모두 이 메소드를 호출한다
+	// 업데이트 (서비스의 메소드에서 balance를 갱신해둔 acc를 들고옴)
+	// *** 서비스의 입금과 출금 메소드 모두 이 메소드를 호출하여 DB의 데이터를 업데이트한다
 	public static int updateAccount(Connection conn, Account acc) {
 		PreparedStatement pstmt = null;
 		String sql = "UPDATE ACCOUNT SET BALANCE=? WHERE ID=?";
@@ -120,7 +169,7 @@ public class Dao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, acc.getBalace());
+			pstmt.setInt(1, acc.getBalance());
 			pstmt.setString(2, acc.getId());
 			
 			cnt = pstmt.executeUpdate();

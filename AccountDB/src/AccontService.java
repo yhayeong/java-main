@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.util.List;
 
 public class AccontService {
 	/*
@@ -23,9 +24,22 @@ public class AccontService {
 		else System.out.println(acc);
 
 		Dao.close(conn); 
-		
 	}//accountInfo
 	
+	
+	
+	public void allAccountInfo() {
+		Connection conn = Dao.getConnection(); 
+		
+		List<Account> accs = Dao.selectAccountList(conn);
+		
+		System.out.println("=======계좌 목록=======");
+		for(Account acc : accs) {
+			System.out.println(acc);
+		}
+		
+		Dao.close(conn);
+	}//allAccountInfo
 	
 	
 	
@@ -42,7 +56,6 @@ public class AccontService {
 		}
 				
 		Dao.close(conn);
-		
 	}//makeAccount
 	
 	
@@ -60,15 +73,17 @@ public class AccontService {
 			return;
 		}
 		
-		acc.deposit(money); // 'Account타입 객체'의 balance를 바꾼다음
+		acc.deposit(money); // 찾아온 'Account타입 객체'의 입금메소드를 통해 balance가 바뀐다
 		int cnt = Dao.updateAccount(conn, acc); 
 		// 갱신된 balance를 가진 Account객체를 인자로 전달 
 		// *** 이렇게 할때의 장점 : 하나의 updateAccount메소드로 입금과 출금을 모두 처리할 수 있음
 		
 		if(cnt>0) {
 			System.out.println("----입금 성공----");
-			System.out.println(String.format("%s계좌의 잔액 : %d원", acc.getId(), acc.getBalace()));
+			System.out.println(String.format("%s 계좌의 잔액 : %d원", acc.getId(), acc.getBalance()));
 		}
+		
+		Dao.close(conn);
 	}//deposit
 	
 	
@@ -84,38 +99,21 @@ public class AccontService {
 			return;
 		}
 		
-		if(acc.getBalace()<money) {
+		if(acc.getBalance()<money) {
 			System.out.println("잔액이 부족합니다.");
 			return;
 		}
 		
-		acc.withdraw(money);
-		int cnt = Dao.updateAccount(conn, acc); 
+		acc.withdraw(money); // Account객체를 대상으로 출금한뒤
+		int cnt = Dao.updateAccount(conn, acc); // 출금된 Account객체를 DAO-DB질의쪽으로 전달
 		
 		if(cnt>0) {
 			System.out.println("----출금 성공----");
-			System.out.println(String.format("%s계좌의 잔액 : %d원", acc.getId(), acc.getBalace()));
+			System.out.println(String.format("%s 계좌의 잔액 : %d원", acc.getId(), acc.getBalance()));
 		}
 		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		Dao.close(conn);
+	}//withdraw
 	
 	
 	

@@ -28,11 +28,11 @@ public class Account {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getBalace() {
+	public Integer getBalance() {
 		return balance;
 	}
-	public void setBalace(Integer balace) {
-		this.balance = balace;
+	public void setbalance(Integer balance) {
+		this.balance = balance;
 	}
 	public String getGrade() {
 		return grade;
@@ -45,7 +45,6 @@ public class Account {
 	//메소드
 	@Override
 	public String toString() {
-		
 		return String.format("계좌번호:%s, 이름:%s, 잔액:%d, 등급:%s", id, name, balance, grade);
 	}
 	

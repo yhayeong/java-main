@@ -16,9 +16,10 @@ public class AccountMain {
 //		service.deposit("10003", 50000);
 		
 		// 출금하기
-		service.withdraw("10003", 20000);
+//		service.withdraw("10002", 20000);
+	
+		// 전체 계좌 조회
+		service.allAccountInfo();
 		
 	}//main
-	
-
 }

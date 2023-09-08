@@ -12,7 +12,7 @@ public class AccontService {
 	 DAO에는 실제DB에 대해 질의하는 메소드를 만든다
 	 
 	 */
-
+	
 	
 	public void accountInfo(String id) {
 		

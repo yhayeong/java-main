@@ -20,7 +20,7 @@ public class Dao {
 			/*
 			 load메소드를 통해 파일을 가져와서, 
 			 그 파일의 키값을 통해 벨류를 얻어오는 getProperty메소드를 이용하여 벨류를
-			 드라이버클래스로 지정한다 - 반환받은 클래스의 멤버를 사용할 일이 없으므로 딱히 참조변수에 담지 않음
+			 드라이버클래스로 지정한다 (반환받은 클래스의 멤버를 사용할 일이 없으므로 딱히 참조변수에 담지는 않음)
 			*/
 			
 			conn = DriverManager.getConnection(
@@ -35,6 +35,7 @@ public class Dao {
 	}//getConnection
 	
 	
+	
 	// 연결 객체 닫는 메소드
 	public static void close(Connection conn) {
 		try {
@@ -43,7 +44,6 @@ public class Dao {
 			e.printStackTrace();
 		}
 	}//close
-	
 	
 	
 	
@@ -73,18 +73,15 @@ public class Dao {
 			e.printStackTrace();
 		} finally {
 			try {
-				try {
-					if(rs!=null) rs.close();
-					if(pstmt!=null) pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
 			} catch (Exception e) {
-				
+				e.printStackTrace();
 			}
 		}
 		
-		return acc; // if(rs!=null && rs.next())에 들어오면 데이터를 이용하여 acc를 생성하여 반환하고 조건문에 안걸리면 null을 반환
+		return acc;
+		// if(rs!=null && rs.next())에 들어오면 Account객체를 생성하여 반환하고 조건문에 안걸리면 null을 반환
 	}//selectAccount
 	
 	
@@ -124,7 +121,7 @@ public class Dao {
 		}
 		
 		return accList;
-	}
+	}//selectAccountList
 	
 	
 	
@@ -136,13 +133,15 @@ public class Dao {
 		int cnt = 0;
 		
 		try {
+			// 미완성쿼리문용 실행객체를 만든다
 			pstmt = conn.prepareStatement(sql);
+			// 미완성쿼리문을 완성시킨다
 			pstmt.setString(1, acc.getId());
 			pstmt.setString(2, acc.getName());
 			pstmt.setInt(3, acc.getBalance());
 			pstmt.setString(4, acc.getGrade());
-			// 미완성쿼리문을 완성시킨다
-			cnt = pstmt.executeUpdate(); //완성된 쿼리문을 실행하여 결과행의 수를 반환받는다
+			//완성된 쿼리문을 실행하여 결과행의 수를 반환받는다
+			cnt = pstmt.executeUpdate(); 
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,7 +155,6 @@ public class Dao {
 		
 		return cnt;
 	}//insertAccount
-	
 	
 	
 	

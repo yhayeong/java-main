@@ -4,7 +4,6 @@ public class AccountMain {
 		
 		AccontService service = new AccontService();
 		
-		
 		// 계좌 조회하기
 //		service.accountInfo("10001");
 		

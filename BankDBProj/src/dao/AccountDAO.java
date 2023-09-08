@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import acc.Account;
@@ -59,16 +62,16 @@ public class AccountDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs!=null && rs.next()) {
-				String resultId = rs.getString("ID"); 
-				String resultName = rs.getString("NAME");
-				Integer resultBalance = rs.getInt("BALANCE");
-				String resultGrade = rs.getString("GRADE");
+				String rid = rs.getString("ID"); // rs의 컬럼명
+				String rname = rs.getString("NAME");
+				Integer rbalance = rs.getInt("BALANCE");
+				String rgrade = rs.getString("GRADE");
 
 				// 받아온 GRADE컬럼값이 null이면 Account를 객체 생성하고 아니면 SpecialAccount객체를 생성
-				if(resultGrade==null) {
-					acc = new Account(resultId, resultName, resultBalance);
+				if(rgrade==null) {
+					acc = new Account(rid, rname, rbalance);
 				} else {
-					acc = new SpecialAccount(resultId, resultName, resultBalance, resultGrade);
+					acc = new SpecialAccount(rid, rname, rbalance, rgrade);
 				}
 			}
 			
@@ -85,6 +88,47 @@ public class AccountDAO {
 		
 		return acc;
 	}
+	
+	
+	
+	// 셀렉트
+	public static List<Account> selectAccountList(Connection conn) {
+		List<Account> accList = new ArrayList<>();
+		
+		Statement stmt = null;
+		String sql = "SELECT * FROM ACCOUNT";
+		ResultSet rs = null;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			if(rs!=null) {
+				while(rs.next()) {
+					String rid = rs.getString(1); // rs의 컬럼 인덱스
+					String rname = rs.getString(2);
+					Integer rbalance = rs.getInt(3);
+					String rgrade = rs.getString(4);
+					
+					if(rgrade==null) accList.add(new Account(rid, rname, rbalance));
+					else accList.add(new SpecialAccount(rid, rname, rbalance, rgrade));
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return accList;
+	}
+	
 	
 	
 	// 인서트
@@ -147,44 +191,8 @@ public class AccountDAO {
 				e.printStackTrace();
 			}
 		}
+		
 		return cnt;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

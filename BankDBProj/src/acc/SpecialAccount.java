@@ -14,15 +14,15 @@ public class SpecialAccount extends Account {
 	
 	public void setGrade(String grade) { //등급과 이자율을 함께 초기화해주는 메소드
 		//if문의 조건식에서 OR하는 것과 같은 로직을 구현하기 위해서 케이스문을 이렇게 쓸수있다
-		switch(grade) {
-		case"V":
-		case"v": this.grade="VIP"; this.interest = 0.04; break; 
-		case"G":
-		case"g": this.grade="Gold"; this.interest = 0.03; break;
-		case"S":
-		case"s": this.grade="Silver"; this.interest = 0.02; break;
-		case"N":
-		case"n": this.grade="Normal"; this.interest = 0.01; break;
+		switch(grade.charAt(0)) {
+		case'V':
+		case'v': this.grade="VIP"; this.interest = 0.04; break; 
+		case'G':
+		case'g': this.grade="Gold"; this.interest = 0.03; break;
+		case'S':
+		case's': this.grade="Silver"; this.interest = 0.02; break;
+		case'N':
+		case'n': this.grade="Normal"; this.interest = 0.01; break;
 		}
 	}
 	

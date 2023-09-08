@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.util.List;
 import java.util.Scanner;
 
 import acc.Account;
@@ -163,8 +164,15 @@ public class Bank { //MVC에서 사용자인터페이스(Main) 및 서비스를 
 	
 	void allAccountInfo() {
 		
+		Connection conn = AccountDAO.getConnection();
 		
-
+		System.out.println("[전체계좌조회]");
+		List<Account> accs = AccountDAO.selectAccountList(conn);
+		
+		for(Account acc : accs) {
+			System.out.println(acc);
+		}
+		AccountDAO.close(conn);
 	}
 	
 	

@@ -184,15 +184,26 @@ public class PlayerDAO {
 		List<Player> playerList = new ArrayList<>();
 		Connection conn = getConnecton();
 		PreparedStatement pstmt = null;
-		String sql = "SELECT * FROM PLAYER WHERE TEAMNUM = ?";
+		
+		//(1) 팀명으로 팀 조회하는 질의를 통해 팀번호를 가져오는 방식
+//		String sql = "SELECT * FROM PLAYER WHERE TEAMNUM = ?";
+		//(2) 서브쿼리 이용하는 방식
+		String sql = "SELECT * FROM PLAYER WEHRE TEAMNUM = (SELECT NUM FROM TEAM WHERE NAME = ?)";
+		
 		ResultSet rs = null;
 		
 		try {
-			TeamDAO teamDao = new TeamDAO();
-			Team team = teamDao.selectTeam(teamName); // 팀명으로 팀을 조회
+			//(1)
+//			TeamDAO teamDao = new TeamDAO();
+//			Team team = teamDao.selectTeam(teamName); // 팀명으로 팀을 조회
+//			
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setInt(1, team.getNum()); // 팀의 팀번호를 뽑아 미완성쿼리문을 완성시킴
 			
+			//(2) 
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, team.getNum()); // 팀의 팀번호를 뽑아 미완성쿼리문을 완성시킴
+			pstmt.setString(1, teamName);
+			
 			rs = pstmt.executeQuery();
 			
 			if(rs!=null) {

@@ -7,18 +7,31 @@ public class Player {
 	private String name;
 	private Integer backnum;
 	private Integer teamnum;
-	
 	private String teamname; // toString에서 사용할 팀 이름 (테이블의 컬럼으로는 존재하지 않지만)
 
 	//생성자
 	public Player() {}
-	public Player(Integer num, String name, Integer backnum, Integer teamnum, String teamname) {
-		super();
+//	public Player(Integer num, String name, Integer backnum, Integer teamnum, String teamname) {
+//		this.num = num;
+//		this.name = name;
+//		this.backnum = backnum;
+//		this.teamnum = teamnum;
+//		this.teamname = teamname;
+//	}
+	
+	// 4. 서비스의 regPlayer()에서 사용
+	public Player(String name, Integer backnum, Integer teamNum) {
+		this.name = name;
+		this.backnum = backnum;
+		this.teamnum = teamNum;
+	}
+	
+	// 5. PlayerDAO의 selectPlayerByName에서 사용
+	public Player(Integer num, String name, Integer backnum, Integer teamNum) {
 		this.num = num;
 		this.name = name;
 		this.backnum = backnum;
-		this.teamnum = teamnum;
-		this.teamname = teamname;
+		this.teamnum = teamNum;
 	}
 	
 	//getter, setter

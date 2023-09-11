@@ -21,7 +21,6 @@ public class BaseBallService {
 	}
 	
 	
-	
 	// 1. 팀 등록  
 	public void regTeam() {
 		System.out.println("[팀 등록]");
@@ -83,7 +82,7 @@ public class BaseBallService {
 	}
 	
 	
-	// 5. 특정선수 조회 (이름으로) 리턴타입 List
+	// 5. 특정선수 조회 (이름으로) 
 	public void playerInfoByName() {
 		System.out.println("[선수 조회]");
 		System.out.print("선수명: ");
@@ -100,7 +99,7 @@ public class BaseBallService {
 	}
 	
        
-	// 6. 특정선수 조회 (등번호로) 리턴타입 List cf. 팀이 다르면 중복된 등번호를 가질수있다
+	// 6. 특정선수 조회 (등번호로)
 	public void playerInfoByBackNum() {
 		System.out.println("[선수 조회]");
 		System.out.print("등번호: ");
@@ -118,7 +117,7 @@ public class BaseBallService {
 	
 	
 	
-	// 7. 특정선수 조회 (번호로) 리턴타입 Player
+	// 7. 특정선수 조회 (번호로) 
 	public void playerInfoByNum() {
 		System.out.println("[선수 조회]");
 		System.out.print("선수번호: ");
@@ -163,8 +162,6 @@ public class BaseBallService {
 		System.out.print("선택>> ");
 		return Integer.parseInt(sc.nextLine());
 	}
-	
-
 }
 
 
@@ -172,14 +169,14 @@ public class BaseBallService {
 
 
 /*
-SSG랜더스 인천 : 김광현, 김강민
-키움히어로즈 서울 : 이정우, 이주형
-LG트윈스 서울 : 오지환, 이정용
-KT위즈 수원 : 강백호, 박병호
-KIA타이거즈 광주 : 박찬호, 양현종
-NC다이노스 창원 : 박건우, 김주원
-삼성라이온즈 대구 : 구자욱, 오승환
-롯데자이언츠 부산 : 이정훈, 한동희
-두산베어스 서울 : 양의지, 박재환
-한화이글스 대전 : 노시환, 이진영
+SSG랜더스 인천 : 김광현(29),김강민(0)
+키움히어로즈 서울 : 이정후(51), 이주형(38)
+LG트윈스 서울 : 오지환(10),이정용(31)
+KT위즈 수원 : 강백호(10), 박병호(52)
+KIA타이거즈 광주 : 박찬호(1), 양현종(54)
+NC다이노스 창원 : 박건우(37), 김주원(7)
+삼성라이온즈 대구 : 구자욱(5),오승환(21)
+롯데자이언츠 부산 : 이정훈(48),한동희(25)
+두산베어스 서울 : 양의지(25),박재환(73)
+한화이글스 대전 : 노시환(8),이진영(45)
  * */

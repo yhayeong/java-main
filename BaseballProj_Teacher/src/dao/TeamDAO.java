@@ -65,7 +65,7 @@ public class TeamDAO {
 				e.printStackTrace();
 			}
 		}
-		close(conn); //??
+		close(conn);
 		return cnt;
 	}
 	

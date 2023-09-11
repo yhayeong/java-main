@@ -18,6 +18,12 @@ public class Player {
 		this.teamnum = teamnum;
 		this.teamname = teamname;
 	}
+	public Player(Integer num, String name, Integer backnum, Integer teamnum) {
+		this.num = num;
+		this.name = name;
+		this.backnum = backnum;
+		this.teamnum = teamnum;
+	}
 	
 	//getter, setter
 	public Integer getNum() {

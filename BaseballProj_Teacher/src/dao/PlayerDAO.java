@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Properties;
 
 import dto.Player;
-import dto.Team;
 
 public class PlayerDAO {
 	
@@ -73,7 +72,7 @@ public class PlayerDAO {
 		List<Player> playerList = new ArrayList<>();
 		Connection conn = getConnecton();
 		PreparedStatement pstmt = null;
-//		String sql = "SELECT * FROM PLAYER WHERE NAME = ?";
+//		String sql = "SELECT * FROM PLAYER WHERE NAME = ?"; //-> X. 서비스에서 출력하는 Player의 toString은 팀명을 필요로하기 때문에 DB에서 받아와야함
 		String sql = "SELECT p.num, p.name, p.backnum, p.teamnum, t.name "
 				+ "from player p join team t on p.teamnum=t.num " 
 				+ "where p.name=?";
@@ -92,7 +91,9 @@ public class PlayerDAO {
 					Integer rTeamNum = rs.getInt("TEAMNUM");
 					String rTeamName = rs.getString(5);
 					
-					playerList.add(new Player(rNum, rName, rBackNum, rTeamNum, rTeamName));
+					playerList.add(new Player(rNum, rName, rBackNum, rTeamNum, rTeamName)); // 팀명이 있는 생성자를 통해 팀명필드에 값을 할당
+//					playerList.add(new Player(rNum, rName, rBackNum, rTeamNum, null));
+					
 				}
 			}
 			
@@ -116,7 +117,6 @@ public class PlayerDAO {
 		List<Player> playerList = new ArrayList<>();
 		Connection conn = getConnecton();
 		PreparedStatement pstmt = null;
-//		String sql = "SELECT * FROM PLAYER WHERE BACKNUM = ?";
 		String sql = "SELECT p.num, p.name, p.backnum, p.teamnum, t.name "
 				+ "from player p join team t on p.teamnum=t.num " 
 				+ "where p.backnum=?";
@@ -159,7 +159,6 @@ public class PlayerDAO {
 		Player player = null;
 		Connection conn = getConnecton();
 		PreparedStatement pstmt = null;
-//		String sql = "SELECT * FROM PLAYER WHERE NUM = ?";
 		String sql = "SELECT p.num, p.name, p.backnum, p.teamnum, t.name "
 				+ "from player p join team t on p.teamnum=t.num " 
 				+ "where p.num=?";
@@ -201,7 +200,7 @@ public class PlayerDAO {
 		Connection conn = getConnecton();
 		PreparedStatement pstmt = null;
 		
-//		String sql = "SELECT * FROM PLAYER WEHRE TEAMNUM = (SELECT NUM FROM TEAM WHERE NAME = ?)";
+//		String sql = "SELECT * FROM PLAYER WEHRE TEAMNUM = (SELECT NUM FROM TEAM WHERE NAME = ?)"; //->X. Player의 toString은 teamName을 출력하고, 생성자에서 teamName을 초기화하므로 팀명을 DB에서 조회해야함
 		String sql = "SELECT p.num, p.name, p.backnum, p.teamnum, t.name "
 						+ "from player p join team t on p.teamnum=t.num " 
 						+ "where t.name=?";
@@ -212,7 +211,7 @@ public class PlayerDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, teamName);
 			
-			rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery(); // 서브쿼리로 변경하면 여기서 에러 발생 @@@
 			
 			if(rs!=null) {
 				while(rs.next()) {
@@ -222,7 +221,14 @@ public class PlayerDAO {
 					Integer rTeamNum = rs.getInt("P.TEAMNUM");
 					String rTeamName = rs.getString("T.NAME");
 					
+//					Integer rNum = rs.getInt(1);
+//					String rName = rs.getString(2);
+//					Integer rBackNum = rs.getInt(3);
+//					Integer rTeamNum = rs.getInt(4);
+					
 					playerList.add(new Player(rNum, rName, rBackNum, rTeamNum, rTeamName));
+//					playerList.add(new Player(rNum, rName, rBackNum, rTeamNum, null));
+//					playerList.add(new Player(rNum, rName, rBackNum, rTeamNum));
 				}
 			}
 			

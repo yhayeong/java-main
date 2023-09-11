@@ -20,10 +20,19 @@ public class Goods {
 	//제품 종류
 	private String category;
 	
-	//생성자 정의		
+	//생성자 정의
+	//상품 추가용
 	public Goods(String name, int price, int stock, String category) {
 		// 구현해야하는 부분
 		this.code =  "P-" + PRODUCT_SEQ++;
+		this.name = name;
+		this.price = price;
+		this.stock = stock;
+		this.category = category;
+	}
+	// 상품 조회용
+	public Goods(String code, String name, int price, int stock, String category) {
+		this.code = code;
 		this.name = name;
 		this.price = price;
 		this.stock = stock;

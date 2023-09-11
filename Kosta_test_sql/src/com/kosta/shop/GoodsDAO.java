@@ -84,11 +84,13 @@ public class GoodsDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs!=null && rs.next()) {
+				String rCode = rs.getString(1);
 				String rName = rs.getString(2);
 				Integer rPrice = rs.getInt(3);
 				Integer rStock = rs.getInt(4);
 				String rCategory = rs.getString(5);
-				goods = new Goods(rName, rPrice, rStock, rCategory);
+//				goods = new Goods(rName, rPrice, rStock, rCategory);
+				goods = new Goods(rCode, rName, rPrice, rStock, rCategory);
 			}
 			
 		} catch (Exception e) {
@@ -143,16 +145,19 @@ public class GoodsDAO {
 	
 	
 	// 주문추가, 주문취소시 상품테이블의 재고량 업데이트
-	public int updateProductStock(int orderNo, Goods goods) {
+//	public int updateProductStock(int orderNo, Goods goods) {
+	public int updateProductStock(Goods goods) {
 		int cnt = 0;
 		Connection conn = getConnecton();
 		PreparedStatement pstmt = null;
-		String sql = " UPDATE goods SET stock=? WHERE (SELECT productcode FROM order WHERE NO=?)";
+//		String sql = " UPDATE goods SET stock=? WHERE (SELECT productcode FROM `order` WHERE NO=?)";
+		String sql = " UPDATE goods SET stock=? WHERE CODE=?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, goods.getStock());
-			pstmt.setInt(2, orderNo);
+//			pstmt.setInt(2, orderNo);
+			pstmt.setString(2, goods.getCode());
 			cnt = pstmt.executeUpdate();
 			
 		} catch (Exception e) {

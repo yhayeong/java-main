@@ -30,7 +30,8 @@ public class Shop { // Service
 		
 		Goods goods = goodsDao.selectProductByCode(order.getProductCode());
 		goods.setStock(order.getAmount());
-		int cnt2 = goodsDao.updateProductStock(order.getNo(), goods);
+//		int cnt2 = goodsDao.updateProductStock(order.getNo(), goods);
+		int cnt2 = goodsDao.updateProductStock(goods);
 		
 		int cnt1 = orderDao.insertOrder(order);
 		if(cnt1>0 && cnt2>0) System.out.println(cnt1 + "건의 주문이 추가되었습니다.");
@@ -63,7 +64,8 @@ public class Shop { // Service
 
 		Goods goods = goodsDao.selectProductByCode(order.getProductCode());
 		goods.setStock(goods.getStock() + order.getAmount());
-		int cnt2 = goodsDao.updateProductStock(order.getNo(), goods);
+//		int cnt2 = goodsDao.updateProductStock(order.getNo(), goods);
+		int cnt2 = goodsDao.updateProductStock(goods);
 		
 		if(cnt1>0 && cnt2>0) System.out.println(cnt1 + "건의 주문이 취소되었습니다.");
 		else System.out.println("주문 취소 실패");

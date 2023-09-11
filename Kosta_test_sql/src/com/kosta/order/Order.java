@@ -19,7 +19,7 @@ public class Order {
 	//생성자 정의	
 	public Order(String customer, String productCode, int amount) {
 		//구현해야하는 부분
-		this.no = ORDER_SEQ+1;
+		this.no = ORDER_SEQ++;
 		this.customer = customer;
 		this.productCode = productCode;
 		this.amount = amount;

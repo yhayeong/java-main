@@ -23,7 +23,7 @@ public class Goods {
 	//생성자 정의		
 	public Goods(String name, int price, int stock, String category) {
 		// 구현해야하는 부분
-		this.code =  "P-" + PRODUCT_SEQ+1;
+		this.code =  "P-" + PRODUCT_SEQ++;
 		this.name = name;
 		this.price = price;
 		this.stock = stock;

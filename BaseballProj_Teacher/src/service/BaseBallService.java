@@ -11,8 +11,15 @@ import dto.Team;
 public class BaseBallService {
 	
 	static Scanner sc = new Scanner(System.in); 
-	TeamDAO teamDao = new TeamDAO();
-	PlayerDAO playerDao = new PlayerDAO();
+	
+	private TeamDAO teamDao;
+	private PlayerDAO playerDao;
+	
+	public BaseBallService() {
+		teamDao = new TeamDAO();
+		playerDao = new PlayerDAO();
+	}
+	
 	
 	
 	// 1. 팀 등록  
@@ -23,7 +30,7 @@ public class BaseBallService {
 		System.out.print("연고지: ");
 		String local = sc.nextLine();
 		
-		Team team = new Team(name, local);
+		Team team = new Team(null, name, local);
 		int cnt = teamDao.insertTeam(team);
 		if(cnt>0) {
 			System.out.println(cnt + "개의 팀이 등록되었습니다.");
@@ -60,43 +67,16 @@ public class BaseBallService {
 		System.out.print("등번호: ");
 		Integer backNum = Integer.parseInt(sc.nextLine());
 		
-		// 팀 목록을 보여준 후 입력받는다 
+		// 팀 목록을 보여준 후 입력받는다 (Team클래스에 num, name만 문자열로 리턴하는 메소드를 만듦)
 		System.out.println("<팀 선택>");
-//		List<Team> teamList = teamDao.selectTeamList();
-//		for (int i=0; i<teamList.size(); i++) {
-//			System.out.println((i+1) + ":" + teamList.get(i).getName());
-//		}
-		System.out.println("1 : SSG랜더스");
-		System.out.println("2 : 키움히어로즈");
-		System.out.println("3 : LG트윈스");
-		System.out.println("4 : KT위즈");
-		System.out.println("5 : KIA타이거즈");
-		System.out.println("6 : NC다이노스");
-		System.out.println("7 : 삼성라이온즈");
-		System.out.println("8 : 롯데자이언츠");
-		System.out.println("9 : 두산베어스");
-		System.out.println("10 : 한화이글스");
+		List<Team> teamList = teamDao.selectTeamList();
+		for (Team team : teamList) {
+			System.out.println(team.shortString());
+		}
 		System.out.print("선택(번호)>> ");
-		int sel = Integer.parseInt(sc.nextLine());
-//		while(true) {
-//			String teamName = "";
-//			switch (sel) {
-//			case 1: teamName = "SSG랜더스"; break;
-//			case 2: teamName = "키움히어로즈"; break;
-//			case 3: teamName = "LG트윈스"; break;
-//			case 4: teamName = "KT위즈"; break;
-//			case 5: teamName = "KIA타이거즈"; break;
-//			case 6: teamName = "NC다이노스"; break;
-//			case 7: teamName = "삼성라이온즈"; break;
-//			case 8: teamName = "롯데자이언츠"; break;
-//			case 9: teamName = "두산베어스"; break;
-//			case 10: teamName = "한화이글스"; break;
-//			default: System.out.println("잘못 선택하셨습니다.");
-//			}
-//			if(1<=sel && sel<=10) break;
-//		}
-		
-		Player player = new Player(playerName, backNum, sel);
+		int teamNum = Integer.parseInt(sc.nextLine());
+
+		Player player = new Player(null, playerName, backNum, teamNum, null);
 		int cnt = playerDao.insertPlayer(player);
 		if(cnt>0) System.out.println(cnt + "명의 선수가 등록되었습니다.");
 		else System.out.println("선수 등록 실패");
@@ -152,7 +132,7 @@ public class BaseBallService {
 	
 	
 	// 8. 특정팀 소속 선수목록 조회 (팀명으로)
-	public void playerListByTeamName() {
+	public void playerListInTeam() {
 		System.out.println("[팀 소속선수 목록 조회]");
 		System.out.print("팀명: ");
 		String teamName = sc.nextLine();
@@ -169,18 +149,17 @@ public class BaseBallService {
 	
 	
 	// 메뉴출력, 사용자입력
-	public static int menu() {
-		System.out.println("[야구 팀/선수 등록/조회]");
+	public int menu() {
+		System.out.println("\n[야구 팀/선수 등록/조회]");
 		System.out.println("1. 팀 등록");
 		System.out.println("2. 특정팀 조회(팀명으로)");
 		System.out.println("3. 팀목록 조회");
-		System.out.println("----------------------");
 		System.out.println("4. 선수 등록");
 		System.out.println("5. 특정선수 조회(이름으로)");
 		System.out.println("6. 특정선수 조회(등번호로)");
 		System.out.println("7. 특정선수 조회(번호로)");
 		System.out.println("8. 특정팀 선수목록 조회)");
-		System.out.println("9. 프로그램 종료");
+		System.out.println("0. 프로그램 종료");
 		System.out.print("선택>> ");
 		return Integer.parseInt(sc.nextLine());
 	}

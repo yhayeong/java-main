@@ -71,8 +71,8 @@ public class Order {
 	//toString override
 	@Override
 	public String toString() {
-		return String.format("주문번호-%d, 주문고객명-%s, 주문상품-%s, 주문수량-%d, 취소여부-%s"
-										, no, customer, productCode, amount, isCanceled==false?"정상":"취소");
+		return String.format("주문 정보: 주문번호-%d, 주문고객명-%s, 주문상품-%s, 주문수량-%d, 취소여부-%s"
+										, no, customer, productCode, amount, isCanceled? "취소":"정상");
 	}
 	
 }

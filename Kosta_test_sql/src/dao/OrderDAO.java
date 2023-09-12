@@ -1,4 +1,4 @@
-package com.kosta.shop;
+package dao;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -15,44 +15,20 @@ import com.kosta.order.Order;
 
 public class OrderDAO {
 	
-	// 연결객체 생성 메소드
-	public Connection getConnecton() {
-		Connection conn = null;
-		try {
-			Properties db = new Properties();
-			db.load(new FileInputStream("db.properties"));
-			Class.forName(db.getProperty("driver"));
-			conn = DriverManager.getConnection(
-							db.getProperty("url"),
-							db.getProperty("user"),
-							db.getProperty("password"));
-		} catch (Exception e) {;
-			e.printStackTrace();
-		}
-		return conn;
-	}
-	//연결객체 닫는 메소드
-	public void close(Connection conn) {
-		try {
-			if(conn!=null) conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	// 주문 추가
 	public int insertOrder(Order order) {
 		int cnt = 0;
-		Connection conn = getConnecton();
+		Connection conn = DBConnect.getConnecton();
 		PreparedStatement pstmt = null;
-		String sql = "INSERT INTO `ORDER` (no, customer, productcode, amount) VALUES (?,?,?,?)"; //no, customer, productCode, amount
-		
+		String sql = "INSERT INTO `ORDER` VALUES (?,?,?,?,?)";
+		// 모든 컬럼을 다 써줬다
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, order.getNo());
 			pstmt.setString(2, order.getCustomer());
 			pstmt.setString(3, order.getProductCode());
 			pstmt.setInt(4, order.getAmount());
+			pstmt.setBoolean(5, order.isCanceled());
 			cnt = pstmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -64,7 +40,7 @@ public class OrderDAO {
 				e.printStackTrace();
 			}
 		}
-		close(conn);
+		DBConnect.close(conn);
 		return cnt;
 	}
 	
@@ -72,7 +48,7 @@ public class OrderDAO {
 	// 주문 정보 조회
 	public Order selectOrderByNo(int no) {
 		Order order = null;
-		Connection conn = getConnecton();
+		Connection conn = DBConnect.getConnecton();
 		PreparedStatement pstmt = null;
 		String sql = "SELECT * FROM `ORDER` WHERE NO=?";
 		ResultSet rs = null;
@@ -101,7 +77,7 @@ public class OrderDAO {
 				e.printStackTrace();
 			}
 		}
-		close(conn);
+		DBConnect.close(conn);
 		return order;
 	}
 	
@@ -109,7 +85,7 @@ public class OrderDAO {
 	// 주문 취소 -> 취소여부필드값이 변한 order객체를 인자로 받아 업데이트한다
 	public int updateCancelOrder(Order order) {
 		int cnt = 0;
-		Connection conn = getConnecton();
+		Connection conn = DBConnect.getConnecton();
 		PreparedStatement pstmt = null;
 		String sql = "UPDATE `ORDER` SET ISCANCELED=? WHERE NO=?";
 		
@@ -128,7 +104,7 @@ public class OrderDAO {
 				e.printStackTrace();
 			}
 		}
-		close(conn);
+		DBConnect.close(conn);
 		return cnt;
 	}
 
@@ -136,9 +112,9 @@ public class OrderDAO {
 	// 전체 주문 정보 출력
 	public List<Order> selectOrderList() {
 		List<Order> orderList = new ArrayList<>();
-		Connection conn = getConnecton();
+		Connection conn = DBConnect.getConnecton();
 		Statement stmt = null;
-		String sql = "SELECT * FROM ORDER";
+		String sql = "SELECT * FROM `ORDER`";
 		ResultSet rs = null;
 		
 		try {
@@ -166,14 +142,14 @@ public class OrderDAO {
 				e.printStackTrace();
 			} 
 		}
-		close(conn);
+		DBConnect.close(conn);
 		return orderList;
 	}
 	
 	// 주문 내역 (고객명과 취소여부)
 	public List<Order> selectOrderByCustomerAndIsCanceled(String name, Boolean isCanceled) {
 		List<Order> orderList = new ArrayList<>();
-		Connection conn = getConnecton();
+		Connection conn = DBConnect.getConnecton();
 		PreparedStatement pstmt = null;
 //		String sql = "SELECT O.*, G.* FROM `ORDER` O JOIN GOODS ON (O.PRODUCTCODE = G.CODE) "
 //					+ "WHERE O.CUSTOMER=? AND O.ISCANCELED=?";
@@ -206,7 +182,7 @@ public class OrderDAO {
 				e.printStackTrace();
 			}
 		}
-		close(conn);
+		DBConnect.close(conn);
 		return orderList;
 	}
 }

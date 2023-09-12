@@ -1,4 +1,4 @@
-package com.kosta.shop;
+package dao;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -15,35 +15,10 @@ import com.kosta.product.Goods;
 
 public class GoodsDAO {
 	
-	// 연결객체 생성 메소드
-	public Connection getConnecton() {
-		Connection conn = null;
-		try {
-			Properties db = new Properties();
-			db.load(new FileInputStream("db.properties"));
-			Class.forName(db.getProperty("driver"));
-			conn = DriverManager.getConnection(
-							db.getProperty("url"),
-							db.getProperty("user"),
-							db.getProperty("password"));
-		} catch (Exception e) {;
-			e.printStackTrace();
-		}
-		return conn;
-	}
-	//연결객체 닫는 메소드
-	public void close(Connection conn) {
-		try {
-			if(conn!=null) conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	// 상품 추가
 	public int insertProduct(Goods goods) {
 		int cnt = 0;
-		Connection conn = getConnecton();
+		Connection conn = DBConnect.getConnecton();
 		PreparedStatement pstmt = null;
 		String sql = "INSERT INTO GOODS VALUES (?,?,?,?,?)"; //code, name, stock, price, category
 		
@@ -65,7 +40,7 @@ public class GoodsDAO {
 				e.printStackTrace();
 			}
 		}
-		close(conn);
+		DBConnect.close(conn);
 		return cnt;
 	}
 	
@@ -73,7 +48,7 @@ public class GoodsDAO {
 	// 상품 정보 조회
 	public Goods selectProductByCode(String code) {
 		Goods goods = null;
-		Connection conn = getConnecton();
+		Connection conn = DBConnect.getConnecton();
 		PreparedStatement pstmt = null;
 		String sql = "SELECT * FROM GOODS WHERE CODE=?";
 		ResultSet rs = null;
@@ -103,14 +78,14 @@ public class GoodsDAO {
 				e.printStackTrace();
 			}
 		}
-		close(conn);
+		DBConnect.close(conn);
 		return goods;
 	}
 	
 	// 전체 상품 정보 출력
 	public List<Goods> selectProductList() {
 		List<Goods> productList = new ArrayList<>();
-		Connection conn = getConnecton();
+		Connection conn = DBConnect.getConnecton();
 		Statement stmt = null;
 		String sql = "SELECT * FROM GOODS";
 		ResultSet rs = null;
@@ -139,16 +114,17 @@ public class GoodsDAO {
 				e.printStackTrace();
 			} 
 		}
-		close(conn);
+		DBConnect.close(conn);
 		return productList;
 	}
 	
 	
 	// 주문추가, 주문취소시 상품테이블의 재고량 업데이트
+/*	1트에 작성한것
 //	public int updateProductStock(int orderNo, Goods goods) {
 	public int updateProductStock(Goods goods) {
 		int cnt = 0;
-		Connection conn = getConnecton();
+		Connection conn = DBConnect.getConnecton();
 		PreparedStatement pstmt = null;
 //		String sql = " UPDATE goods SET stock=? WHERE (SELECT productcode FROM `order` WHERE NO=?)";
 		String sql = " UPDATE goods SET stock=? WHERE CODE=?";
@@ -169,7 +145,33 @@ public class GoodsDAO {
 				e.printStackTrace();
 			}
 		}
-		close(conn);
+		DBConnect.close(conn);
+		return cnt;
+	}
+*/	
+	
+	public int updateProductStock(String productCode, int amount) { // 두번째 인자가 주문추가시에는 음수, 주문취소시에는 양수
+		int cnt = 0;
+		Connection conn = DBConnect.getConnecton();
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE GOODS SET STOCK=STOCK+? WHERE CODE=?"; // *** SET 컬럼명 = 컬럼명+?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, amount);
+			pstmt.setString(2, productCode);
+			cnt = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		DBConnect.close(conn);
 		return cnt;
 	}
 	
